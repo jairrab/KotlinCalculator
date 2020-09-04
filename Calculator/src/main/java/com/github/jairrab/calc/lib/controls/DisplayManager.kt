@@ -19,7 +19,7 @@ class DisplayManager(
                 entriesManager.isLastEntryANumber() -> entriesManager.getLastEntry().toDouble()
                 else -> throw IllegalStateException("Invalid entry")
             }
-            else -> equationSolver.calculateEquation(entriesManager.getEntries())
+            else -> equationSolver.solve(entriesManager.getEntries())
         }
 
         LOG.info("Key: $key | Entries: ${entriesManager.getEntries()} | Result: $result")

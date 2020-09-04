@@ -12,10 +12,16 @@ class BackspaceProcessor(
         if (entriesManager.hasEntries()) {
             when {
                 entriesManager.isLastEntryANumber() -> {
-                    entriesManager.setLastEntry(entriesManager.getLastEntry().trimEndChar())
+                    val entry = entriesManager.getLastEntry().trimEndChar()
+                    if (entry.isNotEmpty()) {
+                        entriesManager.setLastEntry(entry)
+                    } else {
+                        entriesManager.removeLastEntry()
+                    }
                 }
                 entriesManager.isLastEntryAnOperator() -> entriesManager.removeLastEntry()
                 entriesManager.isLastEntryADecimal() -> entriesManager.removeLastEntry()
+                else -> throw IllegalStateException("Invalid backspace command")
             }
         }
 

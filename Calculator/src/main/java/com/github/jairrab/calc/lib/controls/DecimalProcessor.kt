@@ -20,6 +20,7 @@ class DecimalProcessor(
                     entriesManager.setLastEntry(entriesManager.getLastEntry() + DECIMAL)
                 }
                 entriesManager.isLastEntryADecimal() -> return
+                else -> throw IllegalStateException("Invalid decimal command")
             }
         }
 

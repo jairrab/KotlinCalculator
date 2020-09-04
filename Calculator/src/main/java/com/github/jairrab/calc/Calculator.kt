@@ -5,6 +5,8 @@ package com.github.jairrab.calc
 import com.github.jairrab.calc.lib.CalculatorUtility
 import com.github.jairrab.calc.lib.controls.*
 import com.github.jairrab.calc.lib.mathutils.EquationSolver
+import com.github.jairrab.calc.lib.mathutils.calculators.BasicMdasCalculator
+import com.github.jairrab.calc.lib.mathutils.calculators.BasicNonMdasCalculator
 
 
 interface Calculator {
@@ -33,13 +35,26 @@ interface Calculator {
 
     companion object {
         @JvmStatic
-        fun getInstance(listener: Listener) = getInstance(0.0, listener)
+        fun getInstance(listener: Listener) = getInstance(
+            calculatorType = CalculatorType.BASIC_MDAS,
+            initialNumber = 0.0,
+            listener = listener
+        )
 
         @JvmStatic
-        fun getInstance(initialNumber: Double = 0.0, listener: Listener): Calculator {
+        fun getInstance(
+            calculatorType: CalculatorType = CalculatorType.BASIC_MDAS,
+            initialNumber: Double = 0.0,
+            listener: Listener
+        ): Calculator {
             val entriesManager = EntriesManager()
-            val equationSolver = EquationSolver()
+            val equationSolver = EquationSolver(
+                calculatorType = calculatorType,
+                basicMdasCalculator = BasicMdasCalculator(),
+                basicNonMdasCalculator = BasicNonMdasCalculator()
+            )
             val displayManager = DisplayManager(listener, entriesManager, equationSolver)
+
             return CalculatorUtility(
                 initialNumber = initialNumber,
                 clearProcessor = ClearProcessor(entriesManager, displayManager),

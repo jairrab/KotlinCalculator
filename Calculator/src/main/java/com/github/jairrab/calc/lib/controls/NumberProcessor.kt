@@ -24,6 +24,7 @@ class NumberProcessor(
                 entriesManager.isLastEntryADecimal() -> {
                     entriesManager.setLastEntry(entriesManager.getLastEntry() + number)
                 }
+                else -> throw IllegalStateException("Invalid number command")
             }
         }
 
