@@ -30,7 +30,7 @@ Additionally, you can provide additional parameters to get your `Calculator` ins
 ```
 Calculator.getInstance(CalculatorType.BASIC_MDAS, 0.0, this)
 ```
-To use a non-MDAS calculator, pass a `CalculatorType` parameter:
+To use a non-MDAS calculator, pass a `CalculatorType.BASIC_NON_MDAS` parameter:
 ```
 Calculator.getInstance(CalculatorType.BASIC_NON_MDAS, initialNumber, this)
 ```
@@ -57,7 +57,7 @@ calculator.pressDivide()
 calculator.backSpace()
 calculator.pressEquals()
 ```
-`Calculator.Listener` receives updates when a calculator function is called. Here's an example of a sequence of calculator operations and it's resulting logs:
+`Calculator.Listener` receives updates when a calculator function is called. Here's an example of a sequence of calculator operations with it's resulting logs:
 ```
 I/CalculatorLog: Key: initializing | Entries: [] | Result: 0.0
 I/CalculatorLog: Key: 1 | Entries: [1] | Result: 1.0
