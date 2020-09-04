@@ -19,9 +19,6 @@ class MainActivity : AppCompatActivity(), Calculator.Listener {
         setContentView(R.layout.activity_main)
 
         val calculator = Calculator.getInstance(this)
-        
-        /*if you like to start the calculator with a number*/
-        //val calculator = Calculator.getInstance(25.0, this)
     }
 
     override fun onCalculatorUpdate(key: String?, entries: List<String>, result: Double) {
