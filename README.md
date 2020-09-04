@@ -11,7 +11,7 @@ dependencies {
 }
 ```
 ## Usage
-To get an instance of the Calculator library, call `Calculator.getInstance()` and pass a listener to receive calculator updates.
+To get an instance of the `Calculator` library, call `Calculator.getInstance()` and pass a listener to receive calculator updates.
 ```kotlin
 class MainActivity : AppCompatActivity(), Calculator.Listener {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity(), Calculator.Listener {
     }
 }
 ```
-`Calculator.getInstance()` returns a calculator interface that provides the following functions:
+`Calculator.getInstance()` returns a `Calculator` interface that provides the following functions:
 ```kotlin
 calculator.clear()
 calculator.pressOne()
