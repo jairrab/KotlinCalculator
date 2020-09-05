@@ -28,11 +28,11 @@ class MainActivity : AppCompatActivity(), Calculator.Listener {
 }
 ```
 Additionally, you can provide additional parameters to get your `Calculator` instance. By default, the calculator returns an MDAS calculator, that is, it performs multiplication and division before addition and subtraction. It is similar to the following more explicit call:
-```
+```kotlin
 Calculator.getInstance(CalculatorType.BASIC_MDAS, 0.0, this)
 ```
 To use a non-MDAS calculator, pass a `CalculatorType.BASIC_NON_MDAS` parameter:
-```
+```kotlin
 Calculator.getInstance(CalculatorType.BASIC_NON_MDAS, initialNumber, this)
 ```
 The `initialNumber` parameter returns an instance of the calculator with the starting set to this number. This can be used when you want to launch your calculator with a starting number, such as in the case where you would like to edit an existing number.
@@ -65,7 +65,7 @@ calculator.press(CalculatorButton.TWO)
 //etc
 ```
 `Calculator.Listener` receives updates when a calculator function is called. Here's an example of a sequence of calculator operations with it's resulting logs:
-```
+```kotlin
 val calculator = Calculator.getInstance(CalculatorType.BASIC_MDAS, 0.0, this)
 calculator.pressOne()
 calculator.pressTwo()
