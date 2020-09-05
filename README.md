@@ -1,5 +1,6 @@
 # KotlinCalculator
-Calculator library built on Kotlin, compatible with Java projects
+Calculator library built on Kotlin, compatible with Java projects. Pure Kotlin module, lightweight, very flexible.  
+[![](https://jitpack.io/v/jairrab/KotlinCalculator.svg)](https://jitpack.io/#jairrab/KotlinCalculator)
 ## Gradle Setup
 ```
 repositories {
