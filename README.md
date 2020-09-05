@@ -57,7 +57,26 @@ calculator.pressDivide()
 calculator.backSpace()
 calculator.pressEquals()
 ```
+You can also use the universal `press()` function:
+```
+calculator.press(CalculatorButton.ONE)
+calculator.press(CalculatorButton.TWO)
+//etc
+```
 `Calculator.Listener` receives updates when a calculator function is called. Here's an example of a sequence of calculator operations with it's resulting logs:
+```
+val calculator = Calculator.getInstance(CalculatorType.BASIC_MDAS, 0.0, this)
+calculator.pressOne()
+calculator.pressTwo()
+calculator.pressThree()
+calculator.backSpace()
+calculator.pressPlus()
+calculator.pressOne()
+calculator.pressThree()
+calculator.pressMultiply()
+calculator.pressTwo()
+calculator.pressEquals()
+```
 ```
 I/CalculatorLog: Key: initializing | Entries: [] | Result: 0.0
 I/CalculatorLog: Key: 1 | Entries: [1] | Result: 1.0
@@ -69,6 +88,7 @@ I/CalculatorLog: Key: 1 | Entries: [12, +, 1] | Result: 13.0
 I/CalculatorLog: Key: 3 | Entries: [12, +, 13] | Result: 25.0
 I/CalculatorLog: Key: * | Entries: [12, +, 13, *] | Result: 25.0
 I/CalculatorLog: Key: 2 | Entries: [12, +, 13, *, 2] | Result: 38.0
+I/CalculatorLog: Key: 2 | Entries: [12, +, 13, *, 2, =] | Result: 38.0
 ```
 The calculator is a pure Kotlin module library and does not have any Android dependency, thus you will need to provide a UI to call the and display the calculator functions. This makes the library lightweight and very flexible to suit your needs. Here's what a typical UI may look like displaying the above operations:
 ### UI Sample
