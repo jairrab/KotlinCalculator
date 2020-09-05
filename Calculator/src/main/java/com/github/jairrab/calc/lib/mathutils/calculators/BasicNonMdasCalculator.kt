@@ -4,7 +4,6 @@ package com.github.jairrab.calc.lib.mathutils.calculators
 
 import com.github.jairrab.calc.lib.mathutils.Operator.*
 import com.github.jairrab.calc.lib.mathutils.OperatorUtils
-import com.github.jairrab.calc.lib.utils.Logger.LOG
 
 class BasicNonMdasCalculator {
     fun solve(entries: List<String>): Double {
@@ -15,7 +14,6 @@ class BasicNonMdasCalculator {
         var result = 0.0
         var lastOperator = Plus
         for (entry in entries) {
-            LOG.info("Entry is $entry")
             when {
                 OperatorUtils.isNumber(entry) -> {
                     result = when (lastOperator) {

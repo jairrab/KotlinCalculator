@@ -3,6 +3,7 @@
 package com.github.jairrab.calc.lib
 
 import com.github.jairrab.calc.Calculator
+import com.github.jairrab.calc.CalculatorButton
 import com.github.jairrab.calc.lib.controls.*
 import com.github.jairrab.calc.lib.mathutils.Operator
 
@@ -16,6 +17,29 @@ internal open class CalculatorUtility(
 ) : Calculator {
     init {
         clearProcessor.initialize(initialNumber)
+    }
+
+    override fun press(button: CalculatorButton) {
+        when (button) {
+            CalculatorButton.CLEAR -> clear()
+            CalculatorButton.ONE -> pressOne()
+            CalculatorButton.TWO -> pressTwo()
+            CalculatorButton.THREE -> pressThree()
+            CalculatorButton.FOUR -> pressFour()
+            CalculatorButton.FIVE -> pressFive()
+            CalculatorButton.SIX -> pressSix()
+            CalculatorButton.SEVEN -> pressSeven()
+            CalculatorButton.EIGHT -> pressEight()
+            CalculatorButton.NINE -> pressNine()
+            CalculatorButton.ZERO -> pressZero()
+            CalculatorButton.DECIMAL -> pressDecimal()
+            CalculatorButton.PLUS -> pressPlus()
+            CalculatorButton.MINUS -> pressMinus()
+            CalculatorButton.MULTIPLY -> pressMultiply()
+            CalculatorButton.DIVISION -> pressDivide()
+            CalculatorButton.BACKSPACE -> backSpace()
+            CalculatorButton.EQUALS -> pressEquals()
+        }
     }
 
     override fun clear() = clearProcessor.onCleared()
