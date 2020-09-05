@@ -10,6 +10,7 @@ import com.github.jairrab.calc.lib.mathutils.calculators.BasicNonMdasCalculator
 
 
 interface Calculator {
+    fun press(button: CalculatorButton)
     fun clear()
     fun pressOne()
     fun pressTwo()
