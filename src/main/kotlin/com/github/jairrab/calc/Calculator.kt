@@ -49,11 +49,7 @@ interface Calculator {
             listener: Listener
         ): Calculator {
             val entriesManager = EntriesManager()
-            val equationSolver = EquationSolver(
-                calculatorType = calculatorType,
-                basicMdasCalculator = BasicMdasCalculator(),
-                basicNonMdasCalculator = BasicNonMdasCalculator()
-            )
+            val equationSolver = EquationSolver.getInstance(calculatorType)
             val displayManager = DisplayManager(listener, entriesManager, equationSolver)
 
             return CalculatorUtility(

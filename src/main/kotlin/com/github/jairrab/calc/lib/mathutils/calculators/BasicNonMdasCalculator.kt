@@ -2,11 +2,12 @@
 
 package com.github.jairrab.calc.lib.mathutils.calculators
 
+import com.github.jairrab.calc.lib.mathutils.EntriesCalculator
 import com.github.jairrab.calc.lib.mathutils.Operator.*
 import com.github.jairrab.calc.lib.mathutils.OperatorUtils
 
-class BasicNonMdasCalculator {
-    fun solve(entries: List<String>): Double {
+class BasicNonMdasCalculator : EntriesCalculator {
+    override fun solve(entries: List<String>): Double {
         return scan(entries)
     }
 

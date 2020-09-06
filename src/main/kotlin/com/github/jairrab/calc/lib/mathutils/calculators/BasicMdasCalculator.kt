@@ -3,12 +3,13 @@
 package com.github.jairrab.calc.lib.mathutils.calculators
 
 import com.github.jairrab.calc.lib.mathutils.DECIMAL
+import com.github.jairrab.calc.lib.mathutils.EntriesCalculator
 import com.github.jairrab.calc.lib.mathutils.Operator.*
 import com.github.jairrab.calc.lib.mathutils.OperatorUtils.getOperators
 import com.github.jairrab.calc.lib.utils.splitList
 
-class BasicMdasCalculator {
-    fun solve(entries: List<String>): Double {
+class BasicMdasCalculator : EntriesCalculator {
+    override fun solve(entries: List<String>): Double {
         var result = 0.0
 
         result = doPlus(entries, result)
