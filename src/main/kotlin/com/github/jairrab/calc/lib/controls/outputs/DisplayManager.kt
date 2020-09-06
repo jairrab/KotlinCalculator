@@ -28,6 +28,10 @@ class DisplayManager private constructor(
         listener.onCalculatorUpdate(key, entriesManager.getEntries(), result)
     }
 
+    fun resetEntries() {
+        entriesManager.clear()
+    }
+
     companion object {
         fun getInstance(
             entriesManager: EntriesManager,

@@ -10,11 +10,6 @@ import com.github.jairrab.calc.lib.utils.trimEndChar
 class OperatorProcessor(
     private val entriesManager: EntriesManager
 ) {
-    internal fun processEquals() {
-        processOperator(Operator.Equals)
-        entriesManager.clear()
-    }
-
     internal fun processOperator(operator: Operator) {
         if (entriesManager.isNoEntries()) {
             entriesManager.addEntry("0")
