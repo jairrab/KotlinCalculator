@@ -1,13 +1,13 @@
 /* This code is licensed under MIT license (see LICENSE.txt for details) */
 
-package com.github.jairrab.calc.lib.controls
+package com.github.jairrab.calc.lib.controls.buttons
 
+import com.github.jairrab.calc.lib.controls.entries.EntriesManager
 import com.github.jairrab.calc.lib.mathutils.DECIMAL
 
 
 class DecimalProcessor(
-    private val entriesManager: EntriesManager,
-    private val displayManager: DisplayManager
+    private val entriesManager: EntriesManager
 ) {
     fun processDecimal() {
         if (entriesManager.isNoEntries()) {
@@ -23,7 +23,5 @@ class DecimalProcessor(
                 else -> throw IllegalStateException("Invalid decimal command")
             }
         }
-
-        displayManager.update(DECIMAL)
     }
 }

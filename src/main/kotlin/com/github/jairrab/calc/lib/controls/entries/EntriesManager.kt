@@ -1,11 +1,11 @@
 /* This code is licensed under MIT license (see LICENSE.txt for details) */
 
-package com.github.jairrab.calc.lib.controls
+package com.github.jairrab.calc.lib.controls.entries
 
 import com.github.jairrab.calc.lib.mathutils.DECIMAL
 import com.github.jairrab.calc.lib.mathutils.Operator
 
-class EntriesManager {
+class EntriesManager private constructor() {
     private val entries: MutableList<String> = ArrayList()
 
     fun getEntries(): List<String> {
@@ -65,5 +65,11 @@ class EntriesManager {
 
     fun isLastEntryEndsWithDecimal(): Boolean {
         return getLastEntry().endsWith(DECIMAL)
+    }
+
+    companion object {
+        fun getInstance(): EntriesManager {
+            return EntriesManager()
+        }
     }
 }

@@ -1,14 +1,14 @@
 /* This code is licensed under MIT license (see LICENSE.txt for details) */
 
-package com.github.jairrab.calc.lib.controls
+package com.github.jairrab.calc.lib.controls.buttons
 
+import com.github.jairrab.calc.lib.controls.entries.EntriesManager
 import com.github.jairrab.calc.lib.mathutils.Operator
 import com.github.jairrab.calc.lib.mathutils.OperatorUtils
 import com.github.jairrab.calc.lib.utils.trimEndChar
 
-class OperationProcessor(
-    private val entriesManager: EntriesManager,
-    private val displayManager: DisplayManager
+class OperatorProcessor(
+    private val entriesManager: EntriesManager
 ) {
     internal fun processEquals() {
         processOperator(Operator.Equals)
@@ -44,7 +44,5 @@ class OperationProcessor(
                 entriesManager.addEntry(OperatorUtils.getOperatorSymbol(operator))
             }
         }
-
-        displayManager.update(operator.symbol)
     }
 }

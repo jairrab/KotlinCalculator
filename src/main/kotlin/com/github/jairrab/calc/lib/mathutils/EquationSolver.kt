@@ -6,7 +6,7 @@ import com.github.jairrab.calc.CalculatorType
 import com.github.jairrab.calc.lib.mathutils.calculators.BasicMdasCalculator
 import com.github.jairrab.calc.lib.mathutils.calculators.BasicNonMdasCalculator
 
-class EquationSolver(
+class EquationSolver private constructor(
     private val entriesCalculator: EntriesCalculator
 ) {
     fun solve(entries: List<String>): Double {

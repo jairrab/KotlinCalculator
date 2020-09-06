@@ -1,12 +1,12 @@
 /* This code is licensed under MIT license (see LICENSE.txt for details) */
 
-package com.github.jairrab.calc.lib.controls
+package com.github.jairrab.calc.lib.controls.buttons
 
+import com.github.jairrab.calc.lib.controls.entries.EntriesManager
 import com.github.jairrab.calc.lib.utils.trimEndChar
 
 class BackspaceProcessor(
-    private val entriesManager: EntriesManager,
-    private val displayManager: DisplayManager
+    private val entriesManager: EntriesManager
 ) {
     fun onBackSpace() {
         if (entriesManager.hasEntries()) {
@@ -24,7 +24,5 @@ class BackspaceProcessor(
                 else -> throw IllegalStateException("Invalid backspace command")
             }
         }
-
-        displayManager.update("backspace")
     }
 }

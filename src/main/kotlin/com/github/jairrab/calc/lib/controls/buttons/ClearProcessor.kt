@@ -1,10 +1,11 @@
 /* This code is licensed under MIT license (see LICENSE.txt for details) */
 
-package com.github.jairrab.calc.lib.controls
+package com.github.jairrab.calc.lib.controls.buttons
+
+import com.github.jairrab.calc.lib.controls.entries.EntriesManager
 
 class ClearProcessor(
-    private val entriesManager: EntriesManager,
-    private val displayManager: DisplayManager
+    private val entriesManager: EntriesManager
 ) {
     fun initialize(initialNumber: Double) {
         if (initialNumber != 0.0) {
@@ -16,12 +17,9 @@ class ClearProcessor(
 
             entriesManager.addEntry(entry)
         }
-
-        displayManager.update("initializing")
     }
 
     fun onCleared() {
         entriesManager.clear()
-        displayManager.update("clear")
     }
 }

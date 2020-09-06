@@ -1,10 +1,11 @@
 /* This code is licensed under MIT license (see LICENSE.txt for details) */
 
-package com.github.jairrab.calc.lib.controls
+package com.github.jairrab.calc.lib.controls.buttons
+
+import com.github.jairrab.calc.lib.controls.entries.EntriesManager
 
 class NumberProcessor(
-    private val entriesManager: EntriesManager,
-    private val displayManager: DisplayManager
+    private val entriesManager: EntriesManager
 ) {
     fun processNumber(number: Int) {
         if (entriesManager.isNoEntries()) {
@@ -27,7 +28,5 @@ class NumberProcessor(
                 else -> throw IllegalStateException("Invalid number command")
             }
         }
-
-        displayManager.update(number.toString())
     }
 }
