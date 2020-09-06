@@ -1,3 +1,0 @@
-include ':sample'
-include ':Calculator'
-rootProject.name = "KotlinCalculator"
