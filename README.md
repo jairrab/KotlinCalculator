@@ -8,7 +8,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.jairrab:KotlinCalculator:2.1.0'
+    implementation 'com.github.jairrab:KotlinCalculator:2.2.0'
 }
 ```
 ## Usage
