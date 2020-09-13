@@ -18,8 +18,8 @@ allprojects {
     }
 }
 
-group 'com.github.jairrab'
-version "2.2.0"
+group 'com.github.jairrab.calc'
+version "2.2.1"
 
 
 java {
