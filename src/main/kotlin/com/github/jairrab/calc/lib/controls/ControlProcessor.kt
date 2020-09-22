@@ -24,7 +24,7 @@ class ControlProcessor private constructor(
         fun getInstance(
             entriesManager: EntriesManager,
             calculatorType: CalculatorType,
-            listener: Calculator.Listener
+            listener: Calculator.Listener?
         ) = ControlProcessor(
             displayManager = DisplayManager.getInstance(entriesManager, calculatorType, listener),
             clearProcessor = ClearProcessor(entriesManager),

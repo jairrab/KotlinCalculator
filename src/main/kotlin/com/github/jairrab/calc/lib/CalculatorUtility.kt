@@ -128,6 +128,9 @@ internal open class CalculatorUtility(
     override fun pressEquals() {
         controlProcessor.operatorProcessor.processOperator(Operator.Equals)
         controlProcessor.displayManager.update(Operator.Equals.symbol)
-        controlProcessor.displayManager.resetEntries()
+    }
+
+    override fun setListener(listener: Calculator.Listener) {
+        controlProcessor.displayManager.setListener(listener)
     }
 }

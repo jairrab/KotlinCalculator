@@ -27,12 +27,20 @@ interface Calculator {
     fun pressDivide()
     fun backSpace()
     fun pressEquals()
+    fun setListener(listener: Listener)
 
     interface Listener {
         fun onCalculatorUpdate(key: String?, entries: List<String>, result: Double)
     }
 
     companion object {
+        @JvmStatic
+        fun getInstance() = getInstance(
+            calculatorType = CalculatorType.BASIC_MDAS,
+            initialNumber = 0.0,
+            listener = null
+        )
+
         @JvmStatic
         fun getInstance(listener: Listener) = getInstance(
             calculatorType = CalculatorType.BASIC_MDAS,
@@ -44,7 +52,7 @@ interface Calculator {
         fun getInstance(
             calculatorType: CalculatorType = CalculatorType.BASIC_MDAS,
             initialNumber: Double = 0.0,
-            listener: Listener
+            listener: Listener? = null
         ): Calculator = CalculatorUtility(
             initialNumber = initialNumber,
             controlProcessor = ControlProcessor.getInstance(

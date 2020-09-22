@@ -11,32 +11,34 @@ class OperatorProcessor(
     private val entriesManager: EntriesManager
 ) {
     internal fun processOperator(operator: Operator) {
+        val operatorSymbol = OperatorUtils.getOperatorSymbol(operator)
+
         if (entriesManager.isNoEntries()) {
             entriesManager.addEntry("0")
-            entriesManager.addEntry(OperatorUtils.getOperatorSymbol(operator))
+            entriesManager.addEntry(operatorSymbol)
         } else {
             if (entriesManager.isLastEntryAnOperator()) {
                 entriesManager.removeLastEntry()
-                entriesManager.addEntry(OperatorUtils.getOperatorSymbol(operator))
+                entriesManager.addEntry(operatorSymbol)
             } else if (entriesManager.isLastEntryANumber()) {
                 if (entriesManager.isLastEntryEndsWithDecimal()) {
                     entriesManager.setLastEntry(entriesManager.getLastEntry().trimEndChar())
-                    entriesManager.addEntry(OperatorUtils.getOperatorSymbol(operator))
+                    entriesManager.addEntry(operatorSymbol)
                 } else {
-                    entriesManager.addEntry(OperatorUtils.getOperatorSymbol(operator))
+                    entriesManager.addEntry(operatorSymbol)
                 }
             } else if (entriesManager.isLastEntryADecimal()) {
                 if (entriesManager.isSingleEntry()) {
                     entriesManager.removeLastEntry()
                     entriesManager.addEntry("0")
-                    entriesManager.addEntry(OperatorUtils.getOperatorSymbol(operator))
+                    entriesManager.addEntry(operatorSymbol)
                 } else {
                     entriesManager.removeLastEntry()
                     entriesManager.removeLastEntry()
-                    entriesManager.addEntry(OperatorUtils.getOperatorSymbol(operator))
+                    entriesManager.addEntry(operatorSymbol)
                 }
             } else {
-                entriesManager.addEntry(OperatorUtils.getOperatorSymbol(operator))
+                entriesManager.addEntry(operatorSymbol)
             }
         }
     }
