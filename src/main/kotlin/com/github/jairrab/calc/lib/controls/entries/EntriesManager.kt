@@ -2,8 +2,8 @@
 
 package com.github.jairrab.calc.lib.controls.entries
 
-import com.github.jairrab.calc.lib.mathutils.DECIMAL
-import com.github.jairrab.calc.lib.mathutils.Operator
+import com.github.jairrab.calc.CalculatorButton.DECIMAL
+import com.github.jairrab.calc.lib.mathutils.OperatorUtils.operatorTags
 
 class EntriesManager private constructor() {
     private val entries: MutableList<String> = ArrayList()
@@ -45,12 +45,11 @@ class EntriesManager private constructor() {
     }
 
     fun isLastEntryADecimal(): Boolean {
-        return getLastEntry() == DECIMAL
+        return getLastEntry() == DECIMAL.tag
     }
 
     fun isLastEntryAnOperator(): Boolean {
-        val symbols = Operator.values().map { it.symbol }
-        return symbols.contains(getLastEntry())
+        return operatorTags.contains(getLastEntry())
     }
 
     fun isLastEntryANumber(): Boolean {
@@ -59,12 +58,12 @@ class EntriesManager private constructor() {
 
     fun isLastEntryANumberWithDecimal(): Boolean {
         return if (isLastEntryANumber()) {
-            getLastEntry().contains(DECIMAL)
+            getLastEntry().contains(DECIMAL.tag)
         } else false
     }
 
     fun isLastEntryEndsWithDecimal(): Boolean {
-        return getLastEntry().endsWith(DECIMAL)
+        return getLastEntry().endsWith(DECIMAL.tag)
     }
 
     companion object {

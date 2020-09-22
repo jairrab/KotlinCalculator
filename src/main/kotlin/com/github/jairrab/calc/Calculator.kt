@@ -25,6 +25,7 @@ interface Calculator {
     fun pressMinus()
     fun pressMultiply()
     fun pressDivide()
+    fun pressPercent()
     fun backSpace()
     fun pressEquals()
     fun setListener(listener: Listener)

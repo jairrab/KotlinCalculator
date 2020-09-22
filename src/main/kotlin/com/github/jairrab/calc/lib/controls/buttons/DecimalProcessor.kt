@@ -2,8 +2,8 @@
 
 package com.github.jairrab.calc.lib.controls.buttons
 
+import com.github.jairrab.calc.CalculatorButton.DECIMAL
 import com.github.jairrab.calc.lib.controls.entries.EntriesManager
-import com.github.jairrab.calc.lib.mathutils.DECIMAL
 
 
 class DecimalProcessor(
@@ -11,13 +11,13 @@ class DecimalProcessor(
 ) {
     fun processDecimal() {
         if (entriesManager.isNoEntries()) {
-            entriesManager.addEntry(DECIMAL)
+            entriesManager.addEntry(DECIMAL.tag)
         } else {
             when {
-                entriesManager.isLastEntryAnOperator() -> entriesManager.addEntry(DECIMAL)
+                entriesManager.isLastEntryAnOperator() -> entriesManager.addEntry(DECIMAL.tag)
                 entriesManager.isLastEntryANumberWithDecimal() -> return
                 entriesManager.isLastEntryANumber() -> {
-                    entriesManager.setLastEntry(entriesManager.getLastEntry() + DECIMAL)
+                    entriesManager.setLastEntry(entriesManager.getLastEntry() + DECIMAL.tag)
                 }
                 entriesManager.isLastEntryADecimal() -> return
                 else -> throw IllegalStateException("Invalid decimal command")

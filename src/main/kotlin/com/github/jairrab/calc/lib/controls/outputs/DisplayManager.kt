@@ -3,10 +3,10 @@
 package com.github.jairrab.calc.lib.controls.outputs
 
 import com.github.jairrab.calc.Calculator
+import com.github.jairrab.calc.CalculatorButton
 import com.github.jairrab.calc.CalculatorType
 import com.github.jairrab.calc.lib.controls.entries.EntriesManager
 import com.github.jairrab.calc.lib.mathutils.EquationSolver
-import com.github.jairrab.calc.lib.mathutils.Operator
 import com.github.jairrab.calc.lib.utils.Logger.LOG
 
 class DisplayManager private constructor(
@@ -14,7 +14,9 @@ class DisplayManager private constructor(
     private val entriesManager: EntriesManager,
     private val equationSolver: EquationSolver
 ) {
-    fun update(key: String) {
+    fun update(button: CalculatorButton?) {
+        val entries = entriesManager.getEntries()
+
         val result = when {
             entriesManager.isNoEntries() -> 0.0
             entriesManager.isSingleEntry() -> when {
@@ -22,13 +24,14 @@ class DisplayManager private constructor(
                 entriesManager.isLastEntryANumber() -> entriesManager.getLastEntry().toDouble()
                 else -> throw IllegalStateException("Invalid entry")
             }
-            else -> equationSolver.solve(entriesManager.getEntries())
+            else -> equationSolver.solve(entries)
         }
 
-        LOG.info("Key: $key | Entries: ${entriesManager.getEntries()} | Result: $result")
-        listener?.onCalculatorUpdate(key, entriesManager.getEntries(), result)
+        val tag = button?.tag ?: "initializing"
+        LOG.info("Key: $tag | Entries: $entries | Result: $result")
+        listener?.onCalculatorUpdate(tag, entries, result)
 
-        if (key == Operator.Equals.symbol) {
+        if (button == CalculatorButton.EQUALS) {
             entriesManager.clear()
             entriesManager.addEntry(result.toString())
         }

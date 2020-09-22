@@ -2,8 +2,8 @@
 
 package com.github.jairrab.calc.lib.mathutils.calculators
 
+import com.github.jairrab.calc.CalculatorButton
 import com.github.jairrab.calc.lib.mathutils.EntriesCalculator
-import com.github.jairrab.calc.lib.mathutils.Operator.*
 import com.github.jairrab.calc.lib.mathutils.OperatorUtils
 
 class BasicNonMdasCalculator : EntriesCalculator {
@@ -13,15 +13,15 @@ class BasicNonMdasCalculator : EntriesCalculator {
 
     private fun scan(entries: List<String>): Double {
         var result = 0.0
-        var lastOperator = Plus
+        var lastOperator = CalculatorButton.PLUS
         for (entry in entries) {
             when {
                 OperatorUtils.isNumber(entry) -> {
                     result = when (lastOperator) {
-                        Plus -> result + entry.toInt()
-                        Minus -> result - entry.toInt()
-                        Divide -> result / entry.toInt()
-                        Multiply -> result * entry.toInt()
+                        CalculatorButton.PLUS -> result + entry.toInt()
+                        CalculatorButton.MINUS -> result - entry.toInt()
+                        CalculatorButton.DIVISION -> result / entry.toInt()
+                        CalculatorButton.MULTIPLY -> result * entry.toInt()
                         else -> throw IllegalStateException("Invalid last operator")
                     }
                 }

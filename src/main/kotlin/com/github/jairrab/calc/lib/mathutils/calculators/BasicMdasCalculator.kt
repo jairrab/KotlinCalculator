@@ -2,9 +2,8 @@
 
 package com.github.jairrab.calc.lib.mathutils.calculators
 
-import com.github.jairrab.calc.lib.mathutils.DECIMAL
+import com.github.jairrab.calc.CalculatorButton.*
 import com.github.jairrab.calc.lib.mathutils.EntriesCalculator
-import com.github.jairrab.calc.lib.mathutils.Operator.*
 import com.github.jairrab.calc.lib.mathutils.OperatorUtils.getOperators
 import com.github.jairrab.calc.lib.utils.splitList
 
@@ -20,10 +19,10 @@ class BasicMdasCalculator : EntriesCalculator {
     private fun doPlus(entries: List<String>, initialNumber: Double): Double {
         var result = initialNumber
 
-        val splits = entries.splitList(Plus.symbol)
+        val splits = entries.splitList(PLUS.tag)
 
         for (split in splits) {
-            if (getOperators(split).contains(Minus.symbol)) {
+            if (getOperators(split).contains(MINUS.tag)) {
                 result = doMinus(split, result)
             } else {
                 result += doMultiply(split)
@@ -36,7 +35,7 @@ class BasicMdasCalculator : EntriesCalculator {
     private fun doMinus(entries: List<String>, initialNumber: Double): Double {
         var result = initialNumber
 
-        val splits = entries.splitList(Minus.symbol)
+        val splits = entries.splitList(MINUS.tag)
 
         for (index in splits.indices) {
             val multiplyResult = doMultiply(splits[index])
@@ -54,14 +53,14 @@ class BasicMdasCalculator : EntriesCalculator {
     private fun doMultiply(entries: List<String>): Double {
         var result = 1.0
 
-        val splits = entries.splitList(Multiply.symbol)
+        val splits = entries.splitList(MULTIPLY.tag)
 
         for (split in splits) {
-            if (getOperators(split).contains(Divide.symbol)) {
+            if (getOperators(split).contains(DIVISION.tag)) {
                 result = doDivide(split, result)
 
             } else {
-                val number = if (split[0] == DECIMAL) {
+                val number = if (split[0] == DECIMAL.tag) {
                     0.0
                 } else {
                     split[0].toDouble()
@@ -77,11 +76,11 @@ class BasicMdasCalculator : EntriesCalculator {
     private fun doDivide(entries: List<String>, initialNumber: Double): Double {
         var result = initialNumber
 
-        val splits = entries.splitList(Divide.symbol)
+        val splits = entries.splitList(DIVISION.tag)
 
         for (index in splits.indices) {
             //at this point, all remaining are numbers
-            val number = if (splits[index][0] == DECIMAL) {
+            val number = if (splits[index][0] == DECIMAL.tag) {
                 1.0
             } else {
                 splits[index][0].toDouble()
