@@ -45,7 +45,7 @@ class BasicMdasCalculator : EntriesCalculator {
                         a += b
                     }
                     DIVISION.tag -> {
-                        b /= entries[i].toDouble()
+                        b /= getEntryWithPercentFactor(entries[i])
                         a += b
                     }
                     else -> throw IllegalStateException("Error solving last entry")

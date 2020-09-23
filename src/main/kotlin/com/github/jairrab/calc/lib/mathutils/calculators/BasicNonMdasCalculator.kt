@@ -2,35 +2,98 @@
 
 package com.github.jairrab.calc.lib.mathutils.calculators
 
-import com.github.jairrab.calc.CalculatorButton
+import com.github.jairrab.calc.CalculatorButton.*
 import com.github.jairrab.calc.lib.mathutils.EntriesCalculator
-import com.github.jairrab.calc.lib.mathutils.OperatorUtils
+import com.github.jairrab.calc.lib.mathutils.OperatorUtils.isOperator
+import com.github.jairrab.calc.lib.utils.trimEndChar
 
 class BasicNonMdasCalculator : EntriesCalculator {
     override fun solve(entries: List<String>): Double {
-        return scan(entries)
+        val entriesToProcess = entries.toMutableList().apply {
+            if (isOperator(last())) removeLast()
+        }
+
+        return calculate(entriesToProcess)
     }
 
-    private fun scan(entries: List<String>): Double {
-        var result = 0.0
-        var lastOperator = CalculatorButton.PLUS
-        for (entry in entries) {
-            when {
-                OperatorUtils.isNumber(entry) -> {
-                    result = when (lastOperator) {
-                        CalculatorButton.PLUS -> result + entry.toInt()
-                        CalculatorButton.MINUS -> result - entry.toInt()
-                        CalculatorButton.DIVISION -> result / entry.toInt()
-                        CalculatorButton.MULTIPLY -> result * entry.toInt()
-                        else -> throw IllegalStateException("Invalid last operator")
-                    }
+    private fun calculate(entries: List<String>): Double {
+        var a = 0.0
+
+        if (entries.size == 1) {
+            return getEntryWithPercentFactor(entries[0])
+        }
+
+        for (i in entries.indices) {
+            if (isOperator(entries[i])) continue
+
+            if (i == 0) {
+                a = when (entries[i + 1]) {
+                    PLUS.tag, MINUS.tag -> getEntryWithPercentFactor(entries[0])
+                    MULTIPLY.tag, DIVISION.tag -> getEntryWithPercentFactor(entries[0])
+                    else -> throw IllegalStateException("Error solving first entry")
                 }
-                OperatorUtils.isOperator(entry) -> {
-                    lastOperator = OperatorUtils.getOperator(entry)
+                continue
+            }
+
+            if (i == entries.lastIndex) {
+                when (entries[i - 1]) {
+                    PLUS.tag -> a += getEntryWithPercentFactor(entries[i], a)
+                    MINUS.tag -> a -= getEntryWithPercentFactor(entries[i], a)
+                    MULTIPLY.tag -> a *= getEntryWithPercentFactor(entries[i])
+                    DIVISION.tag -> a /= getEntryWithPercentFactor(entries[i])
+                    else -> throw IllegalStateException("Error solving last entry")
                 }
-                else -> throw IllegalStateException("Invalid set of entries")
+                return a
+            }
+
+            when (entries[i + 1]) {
+                PLUS.tag -> when (entries[i - 1]) {
+                    PLUS.tag -> a += getEntryWithPercentFactor(entries[i], a)
+                    MINUS.tag -> a -= getEntryWithPercentFactor(entries[i], a)
+                    MULTIPLY.tag -> a *= getEntryWithPercentFactor(entries[i])
+                    DIVISION.tag -> a /= getEntryWithPercentFactor(entries[i])
+                    else -> throw IllegalStateException("Error checking plus tag")
+                }
+                MINUS.tag -> when (entries[i - 1]) {
+                    PLUS.tag -> a += getEntryWithPercentFactor(entries[i], a)
+                    MINUS.tag -> a -= getEntryWithPercentFactor(entries[i], a)
+                    MULTIPLY.tag -> a *= getEntryWithPercentFactor(entries[i])
+                    DIVISION.tag -> a /= getEntryWithPercentFactor(entries[i])
+                    else -> throw IllegalStateException("Error checking minus tag")
+                }
+                MULTIPLY.tag -> when (entries[i - 1]) {
+                    PLUS.tag -> a += getEntryWithPercentFactor(entries[i])
+                    MINUS.tag -> a -= getEntryWithPercentFactor(entries[i])
+                    MULTIPLY.tag -> a *= getEntryWithPercentFactor(entries[i])
+                    DIVISION.tag -> a /= getEntryWithPercentFactor(entries[i])
+                    else -> throw IllegalStateException("Error checking multiply tag")
+                }
+                DIVISION.tag -> when (entries[i - 1]) {
+                    PLUS.tag -> a += getEntryWithPercentFactor(entries[i])
+                    MINUS.tag -> a -= getEntryWithPercentFactor(entries[i])
+                    MULTIPLY.tag -> a *= getEntryWithPercentFactor(entries[i])
+                    DIVISION.tag -> a /= getEntryWithPercentFactor(entries[i])
+                    else -> throw IllegalStateException("Error checking division tag")
+                }
+                else -> throw IllegalStateException("Error checking next operator tag")
             }
         }
-        return result
+        throw IllegalStateException("Error solving equation")
+    }
+
+    private fun getEntryWithPercentFactor(entry: String, baseNumber: Double): Double {
+        return if (entry.endsWith(PERCENT.tag)) {
+            baseNumber * entry.trimEndChar().toDouble() / 100.0
+        } else {
+            entry.toDouble()
+        }
+    }
+
+    private fun getEntryWithPercentFactor(entry:String): Double {
+        return if (entry.endsWith(PERCENT.tag)) {
+            entry.trimEndChar().toDouble() / 100.0
+        } else {
+            entry.toDouble()
+        }
     }
 }
