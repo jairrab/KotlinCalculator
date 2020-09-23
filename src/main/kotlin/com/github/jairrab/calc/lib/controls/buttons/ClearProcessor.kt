@@ -20,6 +20,6 @@ class ClearProcessor(
     }
 
     fun onCleared() {
-        entriesManager.clear()
+        entriesManager.clearLastResult()
     }
 }

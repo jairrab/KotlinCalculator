@@ -14,6 +14,10 @@ class DecimalProcessor(
             entriesManager.addEntry(DECIMAL.tag)
         } else {
             when {
+                entriesManager.lastResult != null -> {
+                    entriesManager.clearLastResult()
+                    entriesManager.addEntry(DECIMAL.tag)
+                }
                 entriesManager.isLastEntryAnOperator() -> entriesManager.addEntry(DECIMAL.tag)
                 entriesManager.isLastEntryANumberWithDecimal() -> return
                 entriesManager.isLastEntryANumber() -> {

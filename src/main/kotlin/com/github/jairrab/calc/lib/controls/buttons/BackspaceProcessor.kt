@@ -11,6 +11,10 @@ class BackspaceProcessor(
     fun onBackSpace() {
         if (entriesManager.hasEntries()) {
             when {
+                entriesManager.lastResult != null -> {
+                    entriesManager.lastResult = null
+                    entriesManager.removeLastEntry()
+                }
                 entriesManager.isLastEntryANumber() -> {
                     val entry = entriesManager.getLastEntry().trimEndChar()
                     if (entry.isNotEmpty()) {

@@ -32,8 +32,9 @@ class DisplayManager private constructor(
         listener?.onCalculatorUpdate(tag, entries, result)
 
         if (button == CalculatorButton.EQUALS) {
-            entriesManager.clear()
-            entriesManager.addEntry(result.toString())
+            //entriesManager.clear()
+            //entriesManager.addEntry(result.toString())
+            entriesManager.lastResult = result
         }
     }
 

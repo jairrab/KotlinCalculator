@@ -6,6 +6,8 @@ import com.github.jairrab.calc.CalculatorButton.DECIMAL
 import com.github.jairrab.calc.lib.mathutils.OperatorUtils.operatorTags
 
 class EntriesManager private constructor() {
+    var lastResult: Double? = null
+
     private val entries: MutableList<String> = ArrayList()
 
     fun getEntries(): List<String> {
@@ -18,6 +20,16 @@ class EntriesManager private constructor() {
 
     fun addEntry(entry: String) {
         entries += entry
+    }
+
+    fun clearLastResult() {
+        clear()
+        lastResult = null
+    }
+
+    fun setToLastResult() {
+        entries.clear()
+        entries += lastResult.toString()
     }
 
     fun isNoEntries(): Boolean {

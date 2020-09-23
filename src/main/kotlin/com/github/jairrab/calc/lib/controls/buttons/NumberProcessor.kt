@@ -14,6 +14,10 @@ class NumberProcessor(
             entriesManager.addEntry(number)
         } else {
             when {
+                entriesManager.lastResult != null  -> {
+                    entriesManager.clearLastResult()
+                    entriesManager.addEntry(number)
+                }
                 entriesManager.isLastEntryAnOperator() -> {
                     entriesManager.addEntry(number)
                 }

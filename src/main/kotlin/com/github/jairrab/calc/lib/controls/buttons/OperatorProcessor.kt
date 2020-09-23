@@ -17,28 +17,38 @@ class OperatorProcessor(
             entriesManager.addEntry(ZERO.tag)
             entriesManager.addEntry(operator)
         } else {
-            if (entriesManager.isLastEntryAnOperator()) {
-                entriesManager.removeLastEntry()
-                entriesManager.addEntry(operator)
-            } else if (entriesManager.isLastEntryANumber()) {
-                if (entriesManager.isLastEntryEndsWithDecimal()) {
-                    entriesManager.setLastEntry(entriesManager.getLastEntry().trimEndChar())
-                    entriesManager.addEntry(operator)
-                } else {
+            when {
+                entriesManager.lastResult != null  -> {
+                    entriesManager.setToLastResult()
+                    entriesManager.lastResult = null
                     entriesManager.addEntry(operator)
                 }
-            } else if (entriesManager.isLastEntryADecimal()) {
-                if (entriesManager.isSingleEntry()) {
-                    entriesManager.removeLastEntry()
-                    entriesManager.addEntry(ZERO.tag)
-                    entriesManager.addEntry(operator)
-                } else {
-                    entriesManager.removeLastEntry()
+                entriesManager.isLastEntryAnOperator() -> {
                     entriesManager.removeLastEntry()
                     entriesManager.addEntry(operator)
                 }
-            } else {
-                entriesManager.addEntry(operator)
+                entriesManager.isLastEntryANumber() -> {
+                    if (entriesManager.isLastEntryEndsWithDecimal()) {
+                        entriesManager.setLastEntry(entriesManager.getLastEntry().trimEndChar())
+                        entriesManager.addEntry(operator)
+                    } else {
+                        entriesManager.addEntry(operator)
+                    }
+                }
+                entriesManager.isLastEntryADecimal() -> {
+                    if (entriesManager.isSingleEntry()) {
+                        entriesManager.removeLastEntry()
+                        entriesManager.addEntry(ZERO.tag)
+                        entriesManager.addEntry(operator)
+                    } else {
+                        entriesManager.removeLastEntry()
+                        entriesManager.removeLastEntry()
+                        entriesManager.addEntry(operator)
+                    }
+                }
+                else -> {
+                    entriesManager.addEntry(operator)
+                }
             }
         }
     }
