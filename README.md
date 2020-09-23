@@ -11,6 +11,13 @@ dependencies {
     implementation 'com.github.jairrab:KotlinCalculator:2.2.0'
 }
 ```
+## Features
+* Ready to plugin to your existing UI, just wire your event listeners to the provided interface control methods
+* Supports both MDAS (Multiply/Divide/Add/Subtract) and non-MDAS operations
+* You can initialize the calculator with a pre-defined double number
+* Supports percent operation
+* Supports running equation display
+* Supports continous running equations
 ## Usage
 To get an instance of the `Calculator` library, call `Calculator.getInstance()` and pass a listener to receive calculator updates.
 ```kotlin
@@ -55,6 +62,7 @@ calculator.pressPlus()
 calculator.pressMinus()
 calculator.pressMultiply()
 calculator.pressDivide()
+calculator.pressPercent()
 calculator.backSpace()
 calculator.pressEquals()
 ```
