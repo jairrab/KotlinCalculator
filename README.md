@@ -8,7 +8,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.jairrab:KotlinCalculator:2.2.0'
+    //replace $version_number with JitPack version above
+    implementation 'com.github.jairrab:KotlinCalculator:$version_number'
 }
 ```
 ## Features
