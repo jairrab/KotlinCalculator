@@ -13,6 +13,7 @@ dependencies {
 }
 ```
 ## Features
+* Used in a Google Play app with a 4.7 rating
 * Ready to plugin to your existing UI, just wire your event listeners to the provided interface control methods
 * Supports both MDAS (Multiply/Divide/Add/Subtract) and non-MDAS operations
 * You can initialize the calculator with a pre-defined double number
