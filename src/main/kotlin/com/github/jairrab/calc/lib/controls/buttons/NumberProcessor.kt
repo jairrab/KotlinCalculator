@@ -4,6 +4,7 @@ package com.github.jairrab.calc.lib.controls.buttons
 
 import com.github.jairrab.calc.CalculatorButton
 import com.github.jairrab.calc.lib.controls.entries.EntriesManager
+import com.github.jairrab.calc.lib.utils.trimEndChar
 
 class NumberProcessor(
     private val entriesManager: EntriesManager
@@ -14,22 +15,27 @@ class NumberProcessor(
             entriesManager.addEntry(number)
         } else {
             when {
-                entriesManager.lastResult != null  -> {
+                entriesManager.lastResult != null -> {
                     entriesManager.clearLastResult()
                     entriesManager.addEntry(number)
                 }
                 entriesManager.isLastEntryAnOperator() -> {
                     entriesManager.addEntry(number)
                 }
+                entriesManager.isLastEntryAPercentNumber() -> {
+                    val entry = entriesManager.getLastEntry().trimEndChar()
+                    entriesManager.setLastEntry(entry)
+                    entriesManager.appendToLastEntry(number)
+                }
                 entriesManager.isLastEntryANumber() -> {
                     if (entriesManager.getLastEntry() == "0") {
                         entriesManager.setLastEntry(number)
                     } else {
-                        entriesManager.setLastEntry(entriesManager.getLastEntry() + number)
+                        entriesManager.appendToLastEntry(number)
                     }
                 }
                 entriesManager.isLastEntryADecimal() -> {
-                    entriesManager.setLastEntry(entriesManager.getLastEntry() + number)
+                    entriesManager.appendToLastEntry(number)
                 }
                 else -> throw IllegalStateException("Invalid number command")
             }

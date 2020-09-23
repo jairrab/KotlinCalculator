@@ -35,6 +35,6 @@ object OperatorUtils {
     }
 
     fun isNumber(entry: String): Boolean {
-        return entry.toIntOrNull() != null
+        return entry.toDoubleOrNull() != null
     }
 }

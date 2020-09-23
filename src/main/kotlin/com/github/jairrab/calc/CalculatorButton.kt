@@ -20,5 +20,6 @@ enum class CalculatorButton(val tag:String){
     MULTIPLY("*"),
     DIVISION("/"),
     BACKSPACE("backspace"),
+    PERCENT("%"),
     EQUALS("=")
 }

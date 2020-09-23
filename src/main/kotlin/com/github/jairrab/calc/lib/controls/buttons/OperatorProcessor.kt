@@ -2,13 +2,18 @@
 
 package com.github.jairrab.calc.lib.controls.buttons
 
+import com.github.jairrab.calc.Calculator
 import com.github.jairrab.calc.CalculatorButton
 import com.github.jairrab.calc.CalculatorButton.ZERO
+import com.github.jairrab.calc.CalculatorUpdate.InvalidKey
+import com.github.jairrab.calc.InvalidKeyType.INVALID_OPERATOR_ENTRY
 import com.github.jairrab.calc.lib.controls.entries.EntriesManager
+import com.github.jairrab.calc.lib.controls.outputs.DisplayManager
 import com.github.jairrab.calc.lib.utils.trimEndChar
 
 class OperatorProcessor(
-    private val entriesManager: EntriesManager
+    private val entriesManager: EntriesManager,
+    private val displayManager: DisplayManager
 ) {
     internal fun processOperator(calculatorButton: CalculatorButton) {
         val operator = calculatorButton.tag
@@ -25,6 +30,9 @@ class OperatorProcessor(
                 }
                 entriesManager.isLastEntryAnOperator() -> {
                     entriesManager.removeLastEntry()
+                    entriesManager.addEntry(operator)
+                }
+                entriesManager.isLastEntryAPercentNumber() -> {
                     entriesManager.addEntry(operator)
                 }
                 entriesManager.isLastEntryANumber() -> {
@@ -47,7 +55,8 @@ class OperatorProcessor(
                     }
                 }
                 else -> {
-                    entriesManager.addEntry(operator)
+                    displayManager.updateListener(InvalidKey(INVALID_OPERATOR_ENTRY))
+                    throw IllegalStateException("Invalid operator entry")
                 }
             }
         }

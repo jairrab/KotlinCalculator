@@ -34,6 +34,7 @@ internal open class CalculatorUtility(
             CalculatorButton.MULTIPLY -> pressMultiply()
             CalculatorButton.DIVISION -> pressDivide()
             CalculatorButton.BACKSPACE -> backSpace()
+            CalculatorButton.PERCENT -> pressPercent()
             CalculatorButton.EQUALS -> pressEquals()
         }
     }
@@ -119,7 +120,8 @@ internal open class CalculatorUtility(
     }
 
     override fun pressPercent() {
-        TODO("Not yet implemented")
+        controlProcessor.percentProcessor.processPercent()
+        controlProcessor.displayManager.update(CalculatorButton.PERCENT)
     }
 
     override fun backSpace() {
@@ -133,6 +135,6 @@ internal open class CalculatorUtility(
     }
 
     override fun setListener(listener: Calculator.Listener) {
-        controlProcessor.displayManager.setListener(listener)
+        controlProcessor.setListener(listener)
     }
 }

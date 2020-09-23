@@ -31,7 +31,7 @@ interface Calculator {
     fun setListener(listener: Listener)
 
     interface Listener {
-        fun onCalculatorUpdate(key: String?, entries: List<String>, result: Double)
+        fun onCalculatorUpdate(update: CalculatorUpdate)
     }
 
     companion object {

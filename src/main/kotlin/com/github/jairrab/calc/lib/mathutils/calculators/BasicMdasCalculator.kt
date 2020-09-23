@@ -4,95 +4,119 @@ package com.github.jairrab.calc.lib.mathutils.calculators
 
 import com.github.jairrab.calc.CalculatorButton.*
 import com.github.jairrab.calc.lib.mathutils.EntriesCalculator
-import com.github.jairrab.calc.lib.mathutils.OperatorUtils.getOperators
-import com.github.jairrab.calc.lib.utils.splitList
+import com.github.jairrab.calc.lib.mathutils.OperatorUtils.isOperator
+import com.github.jairrab.calc.lib.utils.trimEndChar
 
 class BasicMdasCalculator : EntriesCalculator {
     override fun solve(entries: List<String>): Double {
-        var result = 0.0
-
-        result = doPlus(entries, result)
-
-        return result
-    }
-
-    private fun doPlus(entries: List<String>, initialNumber: Double): Double {
-        var result = initialNumber
-
-        val splits = entries.splitList(PLUS.tag)
-
-        for (split in splits) {
-            if (getOperators(split).contains(MINUS.tag)) {
-                result = doMinus(split, result)
-            } else {
-                result += doMultiply(split)
-            }
+        val entriesToProcess = entries.toMutableList().apply {
+            if (isOperator(last())) removeLast()
         }
 
-        return result
+        return calculate(entriesToProcess)
     }
 
-    private fun doMinus(entries: List<String>, initialNumber: Double): Double {
-        var result = initialNumber
+    private fun calculate(entries: List<String>): Double {
+        var a = 0.0
+        var b = 0.0
 
-        val splits = entries.splitList(MINUS.tag)
-
-        for (index in splits.indices) {
-            val multiplyResult = doMultiply(splits[index])
-
-            if (index == 0) {
-                result += multiplyResult
-            } else {
-                result -= multiplyResult
-            }
+        if (entries.size == 1) {
+            return getEntryWithPercentFactor(entries[0])
         }
 
-        return result
-    }
+        for (i in entries.indices) {
+            if (isOperator(entries[i])) continue
 
-    private fun doMultiply(entries: List<String>): Double {
-        var result = 1.0
-
-        val splits = entries.splitList(MULTIPLY.tag)
-
-        for (split in splits) {
-            if (getOperators(split).contains(DIVISION.tag)) {
-                result = doDivide(split, result)
-
-            } else {
-                val number = if (split[0] == DECIMAL.tag) {
-                    0.0
-                } else {
-                    split[0].toDouble()
+            if (i == 0) {
+                when (entries[i + 1]) {
+                    PLUS.tag, MINUS.tag -> a = getEntryWithPercentFactor(entries[0])
+                    MULTIPLY.tag, DIVISION.tag -> b = getEntryWithPercentFactor(entries[0])
+                    else -> throw IllegalStateException("Error solving first entry")
                 }
+                continue
+            }
 
-                result *= number
+            if (i == entries.lastIndex) {
+                when (entries[i - 1]) {
+                    PLUS.tag -> a += getEntryWithPercentFactor(entries[i], a)
+                    MINUS.tag -> a -= getEntryWithPercentFactor(entries[i], a)
+                    MULTIPLY.tag -> {
+                        b *= getEntryWithPercentFactor(entries[i])
+                        a += b
+                    }
+                    DIVISION.tag -> {
+                        b /= entries[i].toDouble()
+                        a += b
+                    }
+                    else -> throw IllegalStateException("Error solving last entry")
+                }
+                return a
+            }
+
+            when (entries[i + 1]) {
+                PLUS.tag -> when (entries[i - 1]) {
+                    PLUS.tag -> a += getEntryWithPercentFactor(entries[i], a)
+                    MINUS.tag -> a -= getEntryWithPercentFactor(entries[i], a)
+                    MULTIPLY.tag -> {
+                        b *= getEntryWithPercentFactor(entries[i])
+                        a += b
+                        b = 0.0
+                    }
+                    DIVISION.tag -> {
+                        b /= getEntryWithPercentFactor(entries[i])
+                        a += b
+                        b = 0.0
+                    }
+                    else -> throw IllegalStateException("Error checking plus tag")
+                }
+                MINUS.tag -> when (entries[i - 1]) {
+                    PLUS.tag -> a += getEntryWithPercentFactor(entries[i], a)
+                    MINUS.tag -> a -= getEntryWithPercentFactor(entries[i], a)
+                    MULTIPLY.tag -> {
+                        b *= getEntryWithPercentFactor(entries[i])
+                        a += b
+                        b = 0.0
+                    }
+                    DIVISION.tag -> {
+                        b /= getEntryWithPercentFactor(entries[i])
+                        a += b
+                        b = 0.0
+                    }
+                    else -> throw IllegalStateException("Error checking minus tag")
+                }
+                MULTIPLY.tag -> when (entries[i - 1]) {
+                    PLUS.tag -> b = getEntryWithPercentFactor(entries[i])
+                    MINUS.tag -> b = -getEntryWithPercentFactor(entries[i])
+                    MULTIPLY.tag -> b *= getEntryWithPercentFactor(entries[i])
+                    DIVISION.tag -> b /= getEntryWithPercentFactor(entries[i])
+                    else -> throw IllegalStateException("Error checking multiply tag")
+                }
+                DIVISION.tag -> when (entries[i - 1]) {
+                    PLUS.tag -> b = getEntryWithPercentFactor(entries[i])
+                    MINUS.tag -> b = -getEntryWithPercentFactor(entries[i])
+                    MULTIPLY.tag -> b *= getEntryWithPercentFactor(entries[i])
+                    DIVISION.tag -> b /= getEntryWithPercentFactor(entries[i])
+                    else -> throw IllegalStateException("Error checking division tag")
+                }
+                else -> throw IllegalStateException("Error checking next operator tag")
             }
         }
-
-        return result
+        throw IllegalStateException("Error solving equation")
     }
 
-    private fun doDivide(entries: List<String>, initialNumber: Double): Double {
-        var result = initialNumber
-
-        val splits = entries.splitList(DIVISION.tag)
-
-        for (index in splits.indices) {
-            //at this point, all remaining are numbers
-            val number = if (splits[index][0] == DECIMAL.tag) {
-                1.0
-            } else {
-                splits[index][0].toDouble()
-            }
-
-            result *= if (index == 0) {
-                number
-            } else {
-                1 / number
-            }
+    private fun getEntryWithPercentFactor(entry: String, baseNumber: Double): Double {
+        return if (entry.endsWith(PERCENT.tag)) {
+            baseNumber * entry.trimEndChar().toDouble() / 100.0
+        } else {
+            entry.toDouble()
         }
+    }
 
-        return result
+    private fun getEntryWithPercentFactor(entry:String): Double {
+        return if (entry.endsWith(PERCENT.tag)) {
+            entry.trimEndChar().toDouble() / 100.0
+        } else {
+            entry.toDouble()
+        }
     }
 }

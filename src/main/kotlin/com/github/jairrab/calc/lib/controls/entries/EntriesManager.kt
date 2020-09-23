@@ -2,8 +2,10 @@
 
 package com.github.jairrab.calc.lib.controls.entries
 
+import com.github.jairrab.calc.CalculatorButton
 import com.github.jairrab.calc.CalculatorButton.DECIMAL
 import com.github.jairrab.calc.lib.mathutils.OperatorUtils.operatorTags
+import com.github.jairrab.calc.lib.utils.trimEndChar
 
 class EntriesManager private constructor() {
     var lastResult: Double? = null
@@ -52,8 +54,21 @@ class EntriesManager private constructor() {
         entries[entries.lastIndex] = entry
     }
 
+    fun appendToLastEntry(text: String) {
+        setLastEntry(getLastEntry() + text)
+    }
+
     fun getLastEntry(): String {
         return entries.last()
+    }
+
+    fun getLastDoubleEntry(): Double {
+        val lastEntry = getLastEntry()
+        return if (lastEntry.endsWith(CalculatorButton.PERCENT.tag)) {
+            lastEntry.trimEndChar().toDouble() / 100.0
+        } else {
+            lastEntry.toDouble()
+        }
     }
 
     fun isLastEntryADecimal(): Boolean {
@@ -64,12 +79,16 @@ class EntriesManager private constructor() {
         return operatorTags.contains(getLastEntry())
     }
 
+    fun isLastEntryAPercentNumber(): Boolean {
+        return (getLastEntry().endsWith(CalculatorButton.PERCENT.tag))
+    }
+
     fun isLastEntryANumber(): Boolean {
-        return !isLastEntryAnOperator() && !isLastEntryADecimal()
+        return getLastEntry().toDoubleOrNull() != null
     }
 
     fun isLastEntryANumberWithDecimal(): Boolean {
-        return if (isLastEntryANumber()) {
+        return if (isLastEntryANumber() || isLastEntryAPercentNumber()) {
             getLastEntry().contains(DECIMAL.tag)
         } else false
     }

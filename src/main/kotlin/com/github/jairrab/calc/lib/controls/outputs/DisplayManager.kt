@@ -5,12 +5,13 @@ package com.github.jairrab.calc.lib.controls.outputs
 import com.github.jairrab.calc.Calculator
 import com.github.jairrab.calc.CalculatorButton
 import com.github.jairrab.calc.CalculatorType
+import com.github.jairrab.calc.CalculatorUpdate
 import com.github.jairrab.calc.lib.controls.entries.EntriesManager
 import com.github.jairrab.calc.lib.mathutils.EquationSolver
 import com.github.jairrab.calc.lib.utils.Logger.LOG
 
 class DisplayManager private constructor(
-    private var listener: Calculator.Listener?,
+    var listener: Calculator.Listener?,
     private val entriesManager: EntriesManager,
     private val equationSolver: EquationSolver
 ) {
@@ -21,25 +22,30 @@ class DisplayManager private constructor(
             entriesManager.isNoEntries() -> 0.0
             entriesManager.isSingleEntry() -> when {
                 entriesManager.isLastEntryADecimal() -> 0.0
-                entriesManager.isLastEntryANumber() -> entriesManager.getLastEntry().toDouble()
-                else -> throw IllegalStateException("Invalid entry")
+                entriesManager.isLastEntryAPercentNumber() -> entriesManager.getLastDoubleEntry()
+                entriesManager.isLastEntryANumber() -> entriesManager.getLastDoubleEntry()
+                else -> {
+                    throw IllegalStateException("Invalid entry: ${entriesManager.getLastEntry()}")
+                }
             }
             else -> equationSolver.solve(entries)
         }
 
-        val tag = button?.tag ?: "initializing"
-        LOG.info("Key: $tag | Entries: $entries | Result: $result")
-        listener?.onCalculatorUpdate(tag, entries, result)
+        if (button == null) {
+            updateListener(CalculatorUpdate.Initializing)
+            LOG.info("Initializing calculator")
+        } else {
+            LOG.info("Key: ${button.tag} | Entries: $entries | Result: $result")
+            updateListener(CalculatorUpdate.OnUpdate(button.tag, entries, result))
+        }
 
         if (button == CalculatorButton.EQUALS) {
-            //entriesManager.clear()
-            //entriesManager.addEntry(result.toString())
             entriesManager.lastResult = result
         }
     }
 
-    fun setListener(listener: Calculator.Listener) {
-        this.listener = listener
+    fun updateListener(calculatorUpdate: CalculatorUpdate){
+        listener?.onCalculatorUpdate(calculatorUpdate)
     }
 
     companion object {

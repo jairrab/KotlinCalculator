@@ -15,6 +15,10 @@ class BackspaceProcessor(
                     entriesManager.lastResult = null
                     entriesManager.removeLastEntry()
                 }
+                entriesManager.isLastEntryAPercentNumber() -> {
+                    val entry = entriesManager.getLastEntry().trimEndChar()
+                    entriesManager.setLastEntry(entry)
+                }
                 entriesManager.isLastEntryANumber() -> {
                     val entry = entriesManager.getLastEntry().trimEndChar()
                     if (entry.isNotEmpty()) {
