@@ -8,6 +8,7 @@ class ClearProcessor(
     private val entriesManager: EntriesManager
 ) {
     fun initialize(initialNumber: Double) {
+        entriesManager.clear()
         if (initialNumber != 0.0) {
             val entry = if (initialNumber % 1 == 0.0) {
                 initialNumber.toInt().toString()

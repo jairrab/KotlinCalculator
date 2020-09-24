@@ -3,6 +3,7 @@
 package com.github.jairrab.calc.lib.mathutils.calculators
 
 import com.github.jairrab.calc.CalculatorButton.*
+import com.github.jairrab.calc.lib.mathutils.DivideByZeroException
 import com.github.jairrab.calc.lib.mathutils.EntriesCalculator
 import com.github.jairrab.calc.lib.mathutils.OperatorUtils.isOperator
 import com.github.jairrab.calc.lib.utils.trimEndChar
@@ -45,7 +46,7 @@ class BasicMdasCalculator : EntriesCalculator {
                         a += b
                     }
                     DIVISION.tag -> {
-                        b /= getEntryWithPercentFactor(entries[i])
+                        b /= getDivisor(entries, i)
                         a += b
                     }
                     else -> throw IllegalStateException("Error solving last entry")
@@ -63,7 +64,7 @@ class BasicMdasCalculator : EntriesCalculator {
                         b = 0.0
                     }
                     DIVISION.tag -> {
-                        b /= getEntryWithPercentFactor(entries[i])
+                        b /= getDivisor(entries, i)
                         a += b
                         b = 0.0
                     }
@@ -78,7 +79,7 @@ class BasicMdasCalculator : EntriesCalculator {
                         b = 0.0
                     }
                     DIVISION.tag -> {
-                        b /= getEntryWithPercentFactor(entries[i])
+                        b /= getDivisor(entries, i)
                         a += b
                         b = 0.0
                     }
@@ -88,14 +89,14 @@ class BasicMdasCalculator : EntriesCalculator {
                     PLUS.tag -> b = getEntryWithPercentFactor(entries[i])
                     MINUS.tag -> b = -getEntryWithPercentFactor(entries[i])
                     MULTIPLY.tag -> b *= getEntryWithPercentFactor(entries[i])
-                    DIVISION.tag -> b /= getEntryWithPercentFactor(entries[i])
+                    DIVISION.tag -> b /= getDivisor(entries, i)
                     else -> throw IllegalStateException("Error checking multiply tag")
                 }
                 DIVISION.tag -> when (entries[i - 1]) {
                     PLUS.tag -> b = getEntryWithPercentFactor(entries[i])
                     MINUS.tag -> b = -getEntryWithPercentFactor(entries[i])
                     MULTIPLY.tag -> b *= getEntryWithPercentFactor(entries[i])
-                    DIVISION.tag -> b /= getEntryWithPercentFactor(entries[i])
+                    DIVISION.tag -> b /= getDivisor(entries, i)
                     else -> throw IllegalStateException("Error checking division tag")
                 }
                 else -> throw IllegalStateException("Error checking next operator tag")
@@ -104,19 +105,25 @@ class BasicMdasCalculator : EntriesCalculator {
         throw IllegalStateException("Error solving equation")
     }
 
+    private fun getDivisor(entries: List<String>, i: Int): Double {
+        val divisor = getEntryWithPercentFactor(entries[i])
+        if (divisor == 0.0) throw DivideByZeroException()
+        return divisor
+    }
+
     private fun getEntryWithPercentFactor(entry: String, baseNumber: Double): Double {
-        return if (entry.endsWith(PERCENT.tag)) {
-            baseNumber * entry.trimEndChar().toDouble() / 100.0
-        } else {
-            entry.toDouble()
+        return when {
+            entry == DECIMAL.tag -> 0.0
+            entry.endsWith(PERCENT.tag) -> baseNumber * entry.trimEndChar().toDouble() / 100.0
+            else -> entry.toDouble()
         }
     }
 
-    private fun getEntryWithPercentFactor(entry:String): Double {
-        return if (entry.endsWith(PERCENT.tag)) {
-            entry.trimEndChar().toDouble() / 100.0
-        } else {
-            entry.toDouble()
+    private fun getEntryWithPercentFactor(entry: String): Double {
+        return when {
+            entry == DECIMAL.tag -> 1.0
+            entry.endsWith(PERCENT.tag) -> entry.trimEndChar().toDouble() / 100.0
+            else -> entry.toDouble()
         }
     }
 }

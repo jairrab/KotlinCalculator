@@ -15,13 +15,10 @@ import com.github.jairrab.calc.CalculatorUpdate
 fun main() {
     val calculator = Calculator.getInstance(
         calculatorType = CalculatorType.BASIC_MDAS,
-        initialNumber = 0.0,
-        listener = object : Calculator.Listener {
-            override fun onCalculatorUpdate(update: CalculatorUpdate) {
-                //See runtime logs for output
-            }
-        }
-    )
+        initialNumber = 0.0
+    ) {
+        //See runtime logs for output
+    }
 
     calculator.pressOne()
     calculator.pressTwo()

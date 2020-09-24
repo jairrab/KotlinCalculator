@@ -10,6 +10,7 @@ import com.github.jairrab.calc.lib.controls.entries.EntriesManager
 interface Calculator {
     fun press(button: CalculatorButton)
     fun clear()
+    fun resetToNumber(number: Double)
     fun pressOne()
     fun pressTwo()
     fun pressThree()
@@ -30,7 +31,7 @@ interface Calculator {
     fun pressEquals()
     fun setListener(listener: Listener)
 
-    interface Listener {
+    fun interface Listener {
         fun onCalculatorUpdate(update: CalculatorUpdate)
     }
 
