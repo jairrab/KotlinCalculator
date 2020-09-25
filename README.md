@@ -20,19 +20,32 @@ dependencies {
 * Supports percent operation
 * Supports running equation display
 * Supports continous running equations
+* Elegantly handles results and errors (such as divide by zero) through sealed class library callbacks
 ## Usage
 To get an instance of the `Calculator` library, call `Calculator.getInstance()` and pass a listener to receive calculator updates.
 ```kotlin
-class MainActivity : AppCompatActivity(), Calculator.Listener {
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val calculator = Calculator.getInstance(this)
-    }
-
-    override fun onCalculatorUpdate(key: String?, entries: List<String>, result: Double) {
-        Log.v("CALC", "key: $key | entries: $entries | result: $result")
+        val calculator = Calculator.getInstance { calculatorUpdate ->
+            when (calculatorUpdate) {
+                is CalculatorUpdate.Initializing -> {
+                    //returns an object of class type Initializing(val number: Double) 
+                }
+                is CalculatorUpdate.OnUpdate -> {
+                    //returns an object of class type OnUpdate(val key: String?, val entries: List<String>, val result: Double)
+                    Log.v("CALC", "key: ${calculatorUpdate.key} | entries: ${calculatorUpdate.entries} | result: ${calculatorUpdate.result}")
+                }
+                is CalculatorUpdate.InvalidKey -> {
+                    //returns an object of class type InvalidKey(val invalidKeyType: InvalidKeyType)
+                }
+                is CalculatorUpdate.Error.DivideByZero -> {
+                    //returns an object of class type DivideByZero(val key: String?, val entries: List<String>)
+                }
+            }
+        }
     }
 }
 ```
@@ -49,6 +62,7 @@ The `initialNumber` parameter returns an instance of the calculator with the sta
 `Calculator.getInstance()` returns a `Calculator` interface that provides the following functions:
 ```kotlin
 calculator.clear()
+calculator.resetToNumber(number:Double)
 calculator.pressOne()
 calculator.pressTwo()
 calculator.pressThree()
