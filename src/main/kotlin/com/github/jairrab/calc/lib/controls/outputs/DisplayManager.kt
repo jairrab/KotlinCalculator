@@ -42,6 +42,10 @@ class DisplayManager private constructor(
         } catch (e: DivideByZeroException) {
             LOG.warning("Divide by zero error")
             listener?.onCalculatorUpdate(Error.DivideByZero(button.tag, entries))
+
+            if (button == CalculatorButton.EQUALS) {
+                entriesManager.removeLastEntry()
+            }
         }
     }
 
