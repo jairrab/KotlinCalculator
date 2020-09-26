@@ -1,7 +1,7 @@
 package com.github.jairrab.calc
 
 sealed class CalculatorUpdate {
-    class Initializing(val number: Double) : CalculatorUpdate()
+    class Initializing(val number: Double, val entries: List<String>) : CalculatorUpdate()
 
     class OnUpdate(
         val key: String?,
@@ -9,9 +9,9 @@ sealed class CalculatorUpdate {
         val result: Double
     ) : CalculatorUpdate()
 
-    class InvalidKey(val invalidKeyType: InvalidKeyType) : CalculatorUpdate()
 
     sealed class Error : CalculatorUpdate() {
         class DivideByZero(val key: String?, val entries: List<String>) : Error()
+        class InvalidKey(val invalidKeyType: InvalidKeyType, val entries: List<String>) : Error()
     }
 }

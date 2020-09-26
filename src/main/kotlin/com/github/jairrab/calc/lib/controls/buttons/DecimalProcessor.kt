@@ -2,11 +2,8 @@
 
 package com.github.jairrab.calc.lib.controls.buttons
 
-import com.github.jairrab.calc.Calculator
 import com.github.jairrab.calc.CalculatorButton.DECIMAL
-import com.github.jairrab.calc.CalculatorUpdate
-import com.github.jairrab.calc.CalculatorUpdate.InvalidKey
-import com.github.jairrab.calc.InvalidKeyType
+import com.github.jairrab.calc.CalculatorUpdate.Error.InvalidKey
 import com.github.jairrab.calc.InvalidKeyType.INVALID_DECIMAL_ENTRY
 import com.github.jairrab.calc.lib.controls.entries.EntriesManager
 import com.github.jairrab.calc.lib.controls.outputs.DisplayManager
@@ -28,7 +25,8 @@ class DecimalProcessor(
                 }
                 entriesManager.isLastEntryAnOperator() -> entriesManager.addEntry(DECIMAL.tag)
                 entriesManager.isLastEntryANumberWithDecimal() -> {
-                    displayManager.updateListener(InvalidKey(INVALID_DECIMAL_ENTRY))
+                    val entries = entriesManager.getEntries()
+                    displayManager.updateListener(InvalidKey(INVALID_DECIMAL_ENTRY, entries))
                     return
                 }
                 entriesManager.isLastEntryAPercentNumber() -> {

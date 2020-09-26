@@ -2,10 +2,9 @@
 
 package com.github.jairrab.calc.lib.controls.buttons
 
-import com.github.jairrab.calc.Calculator
 import com.github.jairrab.calc.CalculatorButton
 import com.github.jairrab.calc.CalculatorButton.ZERO
-import com.github.jairrab.calc.CalculatorUpdate.InvalidKey
+import com.github.jairrab.calc.CalculatorUpdate.Error.InvalidKey
 import com.github.jairrab.calc.InvalidKeyType.INVALID_OPERATOR_ENTRY
 import com.github.jairrab.calc.lib.controls.entries.EntriesManager
 import com.github.jairrab.calc.lib.controls.outputs.DisplayManager
@@ -55,7 +54,8 @@ class OperatorProcessor(
                     }
                 }
                 else -> {
-                    displayManager.updateListener(InvalidKey(INVALID_OPERATOR_ENTRY))
+                    val entries = entriesManager.getEntries()
+                    displayManager.updateListener(InvalidKey(INVALID_OPERATOR_ENTRY, entries))
                     throw IllegalStateException("Invalid operator entry")
                 }
             }

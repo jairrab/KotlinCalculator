@@ -50,7 +50,7 @@ class DisplayManager private constructor(
     }
 
     fun update(number: Double) {
-        updateListener(CalculatorUpdate.Initializing(number))
+        updateListener(CalculatorUpdate.Initializing(number, entriesManager.getEntries()))
         LOG.info("Initializing calculator")
     }
 
