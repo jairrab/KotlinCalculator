@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
                     //returns an object of class type OnUpdate(val key: String?, val entries: List<String>, val result: Double)
                     Log.v("CALC", "key: ${calculatorUpdate.key} | entries: ${calculatorUpdate.entries} | result: ${calculatorUpdate.result}")
                 }
-                is CalculatorUpdate.InvalidKey -> {
+                is CalculatorUpdate.Error.InvalidKey -> {
                     //returns an object of class type InvalidKey(val invalidKeyType: InvalidKeyType)
                 }
                 is CalculatorUpdate.Error.DivideByZero -> {
