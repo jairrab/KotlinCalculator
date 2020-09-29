@@ -12,11 +12,13 @@ import com.github.jairrab.calc.lib.mathutils.DivideByZeroException
 import com.github.jairrab.calc.lib.mathutils.EquationSolver
 import com.github.jairrab.calc.lib.utils.Logger.LOG
 
-class DisplayManager private constructor(
+internal class OutputManager private constructor(
     var listener: Calculator.Listener?,
     private val entriesManager: EntriesManager,
     private val equationSolver: EquationSolver
 ) {
+    private var currentNumber = 0.0
+
     fun update(button: CalculatorButton) {
         val entries = entriesManager.getEntries()
         try {
@@ -32,6 +34,8 @@ class DisplayManager private constructor(
                 }
                 else -> equationSolver.solve(entries)
             }
+
+            currentNumber = result
 
             LOG.info("Key: ${button.tag} | Entries: $entries | Result: $result")
             updateListener(CalculatorUpdate.OnUpdate(button.tag, entries, result))
@@ -58,14 +62,18 @@ class DisplayManager private constructor(
         listener?.onCalculatorUpdate(calculatorUpdate)
     }
 
+    fun getCurrentNumber(): Double {
+        return currentNumber
+    }
+
     companion object {
         fun getInstance(
             entriesManager: EntriesManager,
             calculatorType: CalculatorType,
             listener: Calculator.Listener?
-        ): DisplayManager {
+        ): OutputManager {
             val equationSolver = EquationSolver.getInstance(calculatorType)
-            return DisplayManager(listener, entriesManager, equationSolver)
+            return OutputManager(listener, entriesManager, equationSolver)
         }
     }
 }

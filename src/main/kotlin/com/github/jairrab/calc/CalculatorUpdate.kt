@@ -12,6 +12,7 @@ sealed class CalculatorUpdate {
 
     sealed class Error : CalculatorUpdate() {
         class DivideByZero(val key: String?, val entries: List<String>) : Error()
+
         class InvalidKey(val invalidKeyType: InvalidKeyType, val entries: List<String>) : Error()
     }
 }

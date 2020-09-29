@@ -5,7 +5,7 @@ package com.github.jairrab.calc.lib.controls.buttons
 import com.github.jairrab.calc.lib.controls.entries.EntriesManager
 import com.github.jairrab.calc.lib.utils.trimEndChar
 
-class BackspaceProcessor(
+internal class BackspaceProcessor(
     private val entriesManager: EntriesManager
 ) {
     fun onBackSpace() {

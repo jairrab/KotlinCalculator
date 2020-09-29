@@ -6,7 +6,7 @@ import com.github.jairrab.calc.CalculatorButton
 import com.github.jairrab.calc.lib.controls.entries.EntriesManager
 import com.github.jairrab.calc.lib.utils.trimEndChar
 
-class NumberProcessor(
+internal class NumberProcessor(
     private val entriesManager: EntriesManager
 ) {
     fun processNumber(calculatorButton: CalculatorButton) {

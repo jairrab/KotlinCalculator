@@ -4,7 +4,7 @@ package com.github.jairrab.calc.lib.controls.buttons
 
 import com.github.jairrab.calc.lib.controls.entries.EntriesManager
 
-class ClearProcessor(
+internal class ClearProcessor(
     private val entriesManager: EntriesManager
 ) {
     fun initialize(initialNumber: Double) {

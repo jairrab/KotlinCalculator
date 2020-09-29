@@ -7,7 +7,7 @@ import com.github.jairrab.calc.CalculatorButton.DECIMAL
 import com.github.jairrab.calc.lib.mathutils.OperatorUtils.operatorTags
 import com.github.jairrab.calc.lib.utils.trimEndChar
 
-class EntriesManager private constructor() {
+internal class EntriesManager private constructor() {
     var lastResult: Double? = null
 
     private val entries: MutableList<String> = ArrayList()

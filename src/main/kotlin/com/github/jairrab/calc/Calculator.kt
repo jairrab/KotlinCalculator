@@ -30,6 +30,7 @@ interface Calculator {
     fun backSpace()
     fun pressEquals()
     fun setListener(listener: Listener)
+    fun getCurrentNumber(): Double
 
     fun interface Listener {
         fun onCalculatorUpdate(update: CalculatorUpdate)
