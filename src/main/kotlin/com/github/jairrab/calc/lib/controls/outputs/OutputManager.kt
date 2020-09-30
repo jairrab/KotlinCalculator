@@ -17,8 +17,6 @@ internal class OutputManager private constructor(
     private val entriesManager: EntriesManager,
     private val equationSolver: EquationSolver
 ) {
-    private var currentNumber = 0.0
-
     fun update(button: CalculatorButton) {
         val entries = entriesManager.getEntries()
         try {
@@ -35,14 +33,14 @@ internal class OutputManager private constructor(
                 else -> equationSolver.solve(entries)
             }
 
-            currentNumber = result
+            entriesManager.setResult(result)
+
+            if (button == CalculatorButton.EQUALS) {
+                entriesManager.setReadyToClear(true)
+            }
 
             LOG.info("Key: ${button.tag} | Entries: $entries | Result: $result")
             updateListener(CalculatorUpdate.OnUpdate(button.tag, entries, result))
-
-            if (button == CalculatorButton.EQUALS) {
-                entriesManager.lastResult = result
-            }
         } catch (e: DivideByZeroException) {
             LOG.warning("Divide by zero error")
             listener?.onCalculatorUpdate(Error.DivideByZero(button.tag, entries))
@@ -63,7 +61,7 @@ internal class OutputManager private constructor(
     }
 
     fun getCurrentNumber(): Double {
-        return currentNumber
+        return entriesManager.getResult()
     }
 
     companion object {

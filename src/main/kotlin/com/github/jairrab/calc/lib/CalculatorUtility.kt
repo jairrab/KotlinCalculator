@@ -8,10 +8,11 @@ import com.github.jairrab.calc.lib.controls.ControlProcessor
 
 internal open class CalculatorUtility(
     initialNumber: Double,
+    readyToClear: Boolean,
     private val controlProcessor: ControlProcessor
 ) : Calculator {
     init {
-        resetToNumber(initialNumber)
+        resetToNumber(initialNumber, readyToClear)
     }
 
     override fun press(button: CalculatorButton) {
@@ -43,8 +44,8 @@ internal open class CalculatorUtility(
         controlProcessor.outputManager.update(CalculatorButton.CLEAR)
     }
 
-    final override fun resetToNumber(number: Double) {
-        controlProcessor.clearProcessor.initialize(number)
+    final override fun resetToNumber(number: Double, readyToClear: Boolean) {
+        controlProcessor.clearProcessor.initialize(number, readyToClear)
         controlProcessor.outputManager.update(number)
     }
 

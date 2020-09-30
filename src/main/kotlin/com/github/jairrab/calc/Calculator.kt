@@ -10,7 +10,7 @@ import com.github.jairrab.calc.lib.controls.entries.EntriesManager
 interface Calculator {
     fun press(button: CalculatorButton)
     fun clear()
-    fun resetToNumber(number: Double)
+    fun resetToNumber(number: Double, readyToClear: Boolean = true)
     fun pressOne()
     fun pressTwo()
     fun pressThree()
@@ -41,6 +41,7 @@ interface Calculator {
         fun getInstance() = getInstance(
             calculatorType = CalculatorType.BASIC_MDAS,
             initialNumber = 0.0,
+            readyToClear = true,
             listener = null
         )
 
@@ -48,6 +49,7 @@ interface Calculator {
         fun getInstance(listener: Listener) = getInstance(
             calculatorType = CalculatorType.BASIC_MDAS,
             initialNumber = 0.0,
+            readyToClear = true,
             listener = listener
         )
 
@@ -55,9 +57,11 @@ interface Calculator {
         fun getInstance(
             calculatorType: CalculatorType = CalculatorType.BASIC_MDAS,
             initialNumber: Double = 0.0,
+            readyToClear: Boolean = true,
             listener: Listener? = null
         ): Calculator = CalculatorUtility(
             initialNumber = initialNumber,
+            readyToClear = readyToClear,
             controlProcessor = ControlProcessor.getInstance(
                 entriesManager = EntriesManager.getInstance(),
                 calculatorType = calculatorType,

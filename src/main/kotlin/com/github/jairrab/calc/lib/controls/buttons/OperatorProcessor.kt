@@ -22,9 +22,9 @@ internal class OperatorProcessor(
             entriesManager.addEntry(operator)
         } else {
             when {
-                entriesManager.lastResult != null  -> {
-                    entriesManager.setToLastResult()
-                    entriesManager.lastResult = null
+                entriesManager.isReadyToClear()  -> {
+                    entriesManager.setEntriesToResult()
+                    entriesManager.setReadyToClear(false)
                     entriesManager.addEntry(operator)
                 }
                 entriesManager.isLastEntryAnOperator() -> {

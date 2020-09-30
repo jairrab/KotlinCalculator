@@ -11,8 +11,8 @@ internal class BackspaceProcessor(
     fun onBackSpace() {
         if (entriesManager.hasEntries()) {
             when {
-                entriesManager.lastResult != null -> {
-                    entriesManager.lastResult = null
+                entriesManager.isReadyToClear() -> {
+                    entriesManager.setReadyToClear(false)
                     entriesManager.removeLastEntry()
                 }
                 entriesManager.isLastEntryAPercentNumber() -> {

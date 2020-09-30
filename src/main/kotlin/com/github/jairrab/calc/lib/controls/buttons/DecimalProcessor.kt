@@ -19,8 +19,9 @@ internal class DecimalProcessor(
             entriesManager.addEntry(DECIMAL.tag)
         } else {
             when {
-                entriesManager.lastResult != null -> {
-                    entriesManager.clearLastResult()
+                entriesManager.isReadyToClear() -> {
+                    entriesManager.clearEntries()
+                    entriesManager.setReadyToClear(false)
                     entriesManager.addEntry(DECIMAL.tag)
                 }
                 entriesManager.isLastEntryAnOperator() -> entriesManager.addEntry(DECIMAL.tag)

@@ -20,7 +20,7 @@ internal class PercentProcessor(
             return
         } else {
             when {
-                entriesManager.lastResult != null -> {
+                entriesManager.isReadyToClear() -> {
                     outputManager.updateListener(InvalidKey(INVALID_PERCENT_ENTRY, entries))
                     return
                 }

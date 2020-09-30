@@ -11,34 +11,34 @@ internal class NumberProcessor(
 ) {
     fun processNumber(calculatorButton: CalculatorButton) {
         val number = calculatorButton.tag
-        if (entriesManager.isNoEntries()) {
-            entriesManager.addEntry(number)
-        } else {
-            when {
-                entriesManager.lastResult != null -> {
-                    entriesManager.clearLastResult()
-                    entriesManager.addEntry(number)
-                }
-                entriesManager.isLastEntryAnOperator() -> {
-                    entriesManager.addEntry(number)
-                }
-                entriesManager.isLastEntryAPercentNumber() -> {
-                    val entry = entriesManager.getLastEntry().trimEndChar()
-                    entriesManager.setLastEntry(entry)
-                    entriesManager.appendToLastEntry(number)
-                }
-                entriesManager.isLastEntryANumber() -> {
-                    if (entriesManager.getLastEntry() == "0") {
-                        entriesManager.setLastEntry(number)
-                    } else {
-                        entriesManager.appendToLastEntry(number)
-                    }
-                }
-                entriesManager.isLastEntryADecimal() -> {
-                    entriesManager.appendToLastEntry(number)
-                }
-                else -> throw IllegalStateException("Invalid number command")
+        when {
+            entriesManager.isNoEntries() -> {
+                entriesManager.addEntry(number)
             }
+            entriesManager.isReadyToClear() -> {
+                entriesManager.clearEntries()
+                entriesManager.setReadyToClear(false)
+                entriesManager.addEntry(number)
+            }
+            entriesManager.isLastEntryAnOperator() -> {
+                entriesManager.addEntry(number)
+            }
+            entriesManager.isLastEntryAPercentNumber() -> {
+                val entry = entriesManager.getLastEntry().trimEndChar()
+                entriesManager.setLastEntry(entry)
+                entriesManager.appendToLastEntry(number)
+            }
+            entriesManager.isLastEntryANumber() -> {
+                if (entriesManager.getLastEntry() == "0") {
+                    entriesManager.setLastEntry(number)
+                } else {
+                    entriesManager.appendToLastEntry(number)
+                }
+            }
+            entriesManager.isLastEntryADecimal() -> {
+                entriesManager.appendToLastEntry(number)
+            }
+            else -> throw IllegalStateException("Invalid number command")
         }
     }
 }

@@ -8,30 +8,41 @@ import com.github.jairrab.calc.lib.mathutils.OperatorUtils.operatorTags
 import com.github.jairrab.calc.lib.utils.trimEndChar
 
 internal class EntriesManager private constructor() {
-    var lastResult: Double? = null
-
     private val entries: MutableList<String> = ArrayList()
+    private var result: Double? = null
+    private var readyToClear = false
 
     fun getEntries(): List<String> {
         return entries
     }
 
-    fun clear() {
+    fun clearEntries() {
         entries.clear()
+    }
+
+    fun isReadyToClear(): Boolean {
+        return readyToClear
+    }
+
+    fun setReadyToClear(readyToClear: Boolean) {
+        this.readyToClear = readyToClear
+    }
+
+    fun getResult(): Double {
+        return result ?: 0.0
+    }
+
+    fun setResult(result: Double) {
+        this.result = result
     }
 
     fun addEntry(entry: String) {
         entries += entry
     }
 
-    fun clearLastResult() {
-        clear()
-        lastResult = null
-    }
-
-    fun setToLastResult() {
+    fun setEntriesToResult() {
         entries.clear()
-        entries += lastResult.toString()
+        entries += result.toString()
     }
 
     fun isNoEntries(): Boolean {
