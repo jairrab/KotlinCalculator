@@ -40,11 +40,6 @@ internal class EntriesManager private constructor() {
         entries += entry
     }
 
-    fun setEntriesToResult() {
-        entries.clear()
-        entries += result.toString()
-    }
-
     fun isNoEntries(): Boolean {
         return entries.isEmpty()
     }

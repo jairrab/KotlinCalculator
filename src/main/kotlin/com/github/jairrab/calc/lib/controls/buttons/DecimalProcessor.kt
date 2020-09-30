@@ -20,8 +20,8 @@ internal class DecimalProcessor(
         } else {
             when {
                 entriesManager.isReadyToClear() -> {
-                    entriesManager.clearEntries()
                     entriesManager.setReadyToClear(false)
+                    entriesManager.clearEntries()
                     entriesManager.addEntry(DECIMAL.tag)
                 }
                 entriesManager.isLastEntryAnOperator() -> entriesManager.addEntry(DECIMAL.tag)

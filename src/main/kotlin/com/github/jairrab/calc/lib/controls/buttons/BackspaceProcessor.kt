@@ -13,7 +13,12 @@ internal class BackspaceProcessor(
             when {
                 entriesManager.isReadyToClear() -> {
                     entriesManager.setReadyToClear(false)
-                    entriesManager.removeLastEntry()
+                    val entry = entriesManager.getLastEntry().trimEndChar()
+                    if (entry.isNotEmpty()) {
+                        entriesManager.setLastEntry(entry)
+                    } else {
+                        entriesManager.removeLastEntry()
+                    }
                 }
                 entriesManager.isLastEntryAPercentNumber() -> {
                     val entry = entriesManager.getLastEntry().trimEndChar()

@@ -17,47 +17,46 @@ internal class OperatorProcessor(
     internal fun processOperator(calculatorButton: CalculatorButton) {
         val operator = calculatorButton.tag
 
-        if (entriesManager.isNoEntries()) {
-            entriesManager.addEntry(ZERO.tag)
-            entriesManager.addEntry(operator)
-        } else {
-            when {
-                entriesManager.isReadyToClear()  -> {
-                    entriesManager.setEntriesToResult()
-                    entriesManager.setReadyToClear(false)
+        when {
+            entriesManager.isNoEntries() -> {
+                entriesManager.setReadyToClear(false)
+                entriesManager.addEntry(ZERO.tag)
+                entriesManager.addEntry(operator)
+            }
+            entriesManager.isReadyToClear() -> {
+                entriesManager.setReadyToClear(false)
+                entriesManager.addEntry(operator)
+            }
+            entriesManager.isLastEntryAnOperator() -> {
+                entriesManager.removeLastEntry()
+                entriesManager.addEntry(operator)
+            }
+            entriesManager.isLastEntryAPercentNumber() -> {
+                entriesManager.addEntry(operator)
+            }
+            entriesManager.isLastEntryANumber() -> {
+                if (entriesManager.isLastEntryEndsWithDecimal()) {
+                    entriesManager.setLastEntry(entriesManager.getLastEntry().trimEndChar())
+                    entriesManager.addEntry(operator)
+                } else {
                     entriesManager.addEntry(operator)
                 }
-                entriesManager.isLastEntryAnOperator() -> {
+            }
+            entriesManager.isLastEntryADecimal() -> {
+                if (entriesManager.isSingleEntry()) {
+                    entriesManager.removeLastEntry()
+                    entriesManager.addEntry(ZERO.tag)
+                    entriesManager.addEntry(operator)
+                } else {
+                    entriesManager.removeLastEntry()
                     entriesManager.removeLastEntry()
                     entriesManager.addEntry(operator)
                 }
-                entriesManager.isLastEntryAPercentNumber() -> {
-                    entriesManager.addEntry(operator)
-                }
-                entriesManager.isLastEntryANumber() -> {
-                    if (entriesManager.isLastEntryEndsWithDecimal()) {
-                        entriesManager.setLastEntry(entriesManager.getLastEntry().trimEndChar())
-                        entriesManager.addEntry(operator)
-                    } else {
-                        entriesManager.addEntry(operator)
-                    }
-                }
-                entriesManager.isLastEntryADecimal() -> {
-                    if (entriesManager.isSingleEntry()) {
-                        entriesManager.removeLastEntry()
-                        entriesManager.addEntry(ZERO.tag)
-                        entriesManager.addEntry(operator)
-                    } else {
-                        entriesManager.removeLastEntry()
-                        entriesManager.removeLastEntry()
-                        entriesManager.addEntry(operator)
-                    }
-                }
-                else -> {
-                    val entries = entriesManager.getEntries()
-                    outputManager.updateListener(InvalidKey(INVALID_OPERATOR_ENTRY, entries))
-                    throw IllegalStateException("Invalid operator entry")
-                }
+            }
+            else -> {
+                val entries = entriesManager.getEntries()
+                outputManager.updateListener(InvalidKey(INVALID_OPERATOR_ENTRY, entries))
+                throw IllegalStateException("Invalid operator entry")
             }
         }
     }

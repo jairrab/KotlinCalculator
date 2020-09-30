@@ -13,11 +13,12 @@ internal class NumberProcessor(
         val number = calculatorButton.tag
         when {
             entriesManager.isNoEntries() -> {
+                entriesManager.setReadyToClear(false)
                 entriesManager.addEntry(number)
             }
             entriesManager.isReadyToClear() -> {
-                entriesManager.clearEntries()
                 entriesManager.setReadyToClear(false)
+                entriesManager.clearEntries()
                 entriesManager.addEntry(number)
             }
             entriesManager.isLastEntryAnOperator() -> {
