@@ -20,6 +20,7 @@ internal class ClearProcessor(
             }
 
             entriesManager.addEntry(entry)
+            entriesManager.setResult(initialNumber)
         }
     }
 
