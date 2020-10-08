@@ -1,5 +1,9 @@
 # KotlinCalculator
 Calculator library built on Kotlin, compatible with Java projects. Pure Kotlin module, lightweight, very flexible.  
+
+I've been browsing around Github looking for a pure calculator library that can be plugged-in to any UI design, and is free from Android specific libraries. To my surprise, most of the calculator libraries I've seen are highly coupled UI-intefaced, built on top of dialog fragments. The goal of this library is to be completely decoupled from any UI framework, but still can be easily plugged-in to an existing user interface design.  
+
+The library uses a linear scanning approach with a linear time complexity, whch makes it ideal for long-running calculations.
 [![](https://jitpack.io/v/jairrab/KotlinCalculator.svg)](https://jitpack.io/#jairrab/KotlinCalculator)
 ## Gradle Setup
 ```
