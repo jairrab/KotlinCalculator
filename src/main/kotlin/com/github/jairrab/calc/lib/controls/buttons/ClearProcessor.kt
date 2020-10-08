@@ -3,6 +3,7 @@
 package com.github.jairrab.calc.lib.controls.buttons
 
 import com.github.jairrab.calc.lib.controls.entries.EntriesManager
+import java.math.BigDecimal
 
 internal class ClearProcessor(
     private val entriesManager: EntriesManager
@@ -13,7 +14,7 @@ internal class ClearProcessor(
 
         if (initialNumber != 0.0) {
             val entry = if (initialNumber % 1 == 0.0) {
-                initialNumber.toInt().toString()
+                BigDecimal(initialNumber).setScale(0).toString()
             } else {
                 initialNumber.toString()
             }
