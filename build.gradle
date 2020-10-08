@@ -8,8 +8,8 @@ plugins {
      * Use plugin 'kotlin' if importing this project into Android Studio
      * Use plugin 'org.jetbrains.kotlin.jvm' version '1.3.61' to build library
      */
-    //id 'kotlin'
-    id 'org.jetbrains.kotlin.jvm' version '1.4.10'
+    id 'kotlin'
+    //id 'org.jetbrains.kotlin.jvm' version '1.4.10'
 }
 
 allprojects {
