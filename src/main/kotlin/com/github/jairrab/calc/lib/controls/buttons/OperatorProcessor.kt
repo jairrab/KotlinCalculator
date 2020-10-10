@@ -25,6 +25,8 @@ internal class OperatorProcessor(
             }
             entriesManager.isReadyToClear() -> {
                 entriesManager.setReadyToClear(false)
+                entriesManager.clearEntries()
+                entriesManager.addEntry(entriesManager.getResult().toString())
                 entriesManager.addEntry(operator)
             }
             entriesManager.isLastEntryAnOperator() -> {
