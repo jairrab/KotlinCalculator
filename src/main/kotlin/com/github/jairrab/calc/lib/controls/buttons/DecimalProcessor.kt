@@ -16,6 +16,7 @@ internal class DecimalProcessor(
 ) {
     fun processDecimal() {
         if (entriesManager.isNoEntries()) {
+            entriesManager.setReadyToClear(false)
             entriesManager.addEntry(DECIMAL.tag)
         } else {
             when {
