@@ -1,3 +1,5 @@
+@file:Suppress("TooManyFunctions")
+
 /* This code is licensed under MIT license (see LICENSE.txt for details) */
 
 package com.github.jairrab.calc.lib.controls.entries
@@ -96,7 +98,9 @@ internal class EntriesManager private constructor() {
     fun isLastEntryANumberWithDecimal(): Boolean {
         return if (isLastEntryANumber() || isLastEntryAPercentNumber()) {
             getLastEntry().contains(DECIMAL.tag)
-        } else false
+        } else {
+            false
+        }
     }
 
     fun isLastEntryEndsWithDecimal(): Boolean {

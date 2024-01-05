@@ -1,3 +1,5 @@
+@file:Suppress("UseCheckOrError")
+
 /* This code is licensed under MIT license (see LICENSE.txt for details) */
 
 package com.github.jairrab.calc.lib.mathutils
@@ -10,7 +12,7 @@ object OperatorUtils {
         CalculatorButton.MINUS,
         CalculatorButton.DIVISION,
         CalculatorButton.MULTIPLY,
-        CalculatorButton.EQUALS,
+        CalculatorButton.EQUALS
     )
 
     val operatorTags = operators.map { it.tag }

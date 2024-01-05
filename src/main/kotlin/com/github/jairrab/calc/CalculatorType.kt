@@ -6,4 +6,3 @@ enum class CalculatorType {
     BASIC_MDAS,
     BASIC_NON_MDAS
 }
-

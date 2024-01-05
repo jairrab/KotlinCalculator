@@ -1,3 +1,5 @@
+@file:Suppress("UseCheckOrError", "SwallowedException")
+
 /* This code is licensed under MIT license (see LICENSE.txt for details) */
 
 package com.github.jairrab.calc.lib.controls.outputs
@@ -11,6 +13,7 @@ import com.github.jairrab.calc.lib.controls.entries.EntriesManager
 import com.github.jairrab.calc.lib.mathutils.DivideByZeroException
 import com.github.jairrab.calc.lib.mathutils.EquationSolver
 import com.github.jairrab.calc.lib.utils.Logger.LOG
+import java.math.BigDecimal
 
 internal class OutputManager private constructor(
     var listener: Calculator.Listener?,
@@ -24,11 +27,12 @@ internal class OutputManager private constructor(
                 entriesManager.isNoEntries() -> 0.0
                 entriesManager.isSingleEntry() -> when {
                     entriesManager.isLastEntryADecimal() -> 0.0
-                    entriesManager.isLastEntryAPercentNumber() -> entriesManager.getLastDoubleEntry()
+                    entriesManager.isLastEntryAPercentNumber() ->
+                        entriesManager.getLastDoubleEntry()
                     entriesManager.isLastEntryANumber() -> entriesManager.getLastDoubleEntry()
-                    else -> {
-                        throw IllegalStateException("Invalid entry: ${entriesManager.getLastEntry()}")
-                    }
+                    else -> throw IllegalStateException(
+                        "Invalid entry: ${entriesManager.getLastEntry()}"
+                    )
                 }
                 else -> equationSolver.solve(entries)
             }
@@ -39,10 +43,27 @@ internal class OutputManager private constructor(
                 entriesManager.setReadyToClear(true)
             }
 
-            LOG.info("Key: ${button.tag} | Entries: $entries | Result: $result")
-            updateListener(CalculatorUpdate.OnUpdate(button.tag, entries, result))
+            val resultText = if (entries.size in 1..2) {
+                entries.first()
+            } else {
+                BigDecimal(result).stripTrailingZeros().toPlainString()
+            }
+
+            LOG.info(
+                "Calculator: Key: ${button.tag} | Entries: $entries | Result: $result " +
+                    "| ResultText: $resultText"
+            )
+
+            updateListener(
+                CalculatorUpdate.OnUpdate(
+                    key = button.tag,
+                    entries = entries,
+                    result = result,
+                    resultText = resultText
+                )
+            )
         } catch (e: DivideByZeroException) {
-            LOG.warning("Divide by zero error")
+            LOG.warning("Calculator: Divide by zero error")
             listener?.onCalculatorUpdate(Error.DivideByZero(button.tag, entries))
 
             if (button == CalculatorButton.EQUALS) {
@@ -53,7 +74,7 @@ internal class OutputManager private constructor(
 
     fun update(number: Double) {
         updateListener(CalculatorUpdate.Initializing(number, entriesManager.getEntries()))
-        LOG.info("Initializing calculator")
+        LOG.info("Calculator: Initializing calculator")
     }
 
     fun updateListener(calculatorUpdate: CalculatorUpdate) {

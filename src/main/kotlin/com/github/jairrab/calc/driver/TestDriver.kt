@@ -10,14 +10,13 @@ package com.github.jairrab.calc.driver
 
 import com.github.jairrab.calc.Calculator
 import com.github.jairrab.calc.CalculatorType
-import com.github.jairrab.calc.CalculatorUpdate
 
 fun main() {
     val calculator = Calculator.getInstance(
         calculatorType = CalculatorType.BASIC_MDAS,
         initialNumber = 0.0
     ) {
-        //See runtime logs for output
+        // See runtime logs for output
     }
 
     calculator.pressOne()

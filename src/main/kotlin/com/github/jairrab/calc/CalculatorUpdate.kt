@@ -6,9 +6,9 @@ sealed class CalculatorUpdate {
     class OnUpdate(
         val key: String?,
         val entries: List<String>,
-        val result: Double
+        val result: Double,
+        val resultText: String
     ) : CalculatorUpdate()
-
 
     sealed class Error : CalculatorUpdate() {
         class DivideByZero(val key: String?, val entries: List<String>) : Error()

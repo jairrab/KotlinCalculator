@@ -4,7 +4,12 @@ package com.github.jairrab.calc.lib.controls
 
 import com.github.jairrab.calc.Calculator
 import com.github.jairrab.calc.CalculatorType
-import com.github.jairrab.calc.lib.controls.buttons.*
+import com.github.jairrab.calc.lib.controls.buttons.BackspaceProcessor
+import com.github.jairrab.calc.lib.controls.buttons.ClearProcessor
+import com.github.jairrab.calc.lib.controls.buttons.DecimalProcessor
+import com.github.jairrab.calc.lib.controls.buttons.NumberProcessor
+import com.github.jairrab.calc.lib.controls.buttons.OperatorProcessor
+import com.github.jairrab.calc.lib.controls.buttons.PercentProcessor
 import com.github.jairrab.calc.lib.controls.entries.EntriesManager
 import com.github.jairrab.calc.lib.controls.outputs.OutputManager
 
@@ -15,7 +20,7 @@ internal class ControlProcessor private constructor(
     val decimalProcessor: DecimalProcessor,
     val numberProcessor: NumberProcessor,
     val operatorProcessor: OperatorProcessor,
-    val percentProcessor: PercentProcessor,
+    val percentProcessor: PercentProcessor
 ) {
     fun setListener(listener: Calculator.Listener) {
         outputManager.listener = listener

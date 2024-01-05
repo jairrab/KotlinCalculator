@@ -2,7 +2,6 @@
 
 package com.github.jairrab.calc.lib.utils
 
-
 fun List<String>.splitList(delimiter: String): List<List<String>> {
     val a: MutableList<List<String>> = ArrayList()
     val b: MutableList<String> = ArrayList()

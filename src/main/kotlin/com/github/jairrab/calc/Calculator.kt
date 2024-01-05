@@ -1,3 +1,5 @@
+@file:Suppress("TooManyFunctions")
+
 /* This code is licensed under MIT license (see LICENSE.txt for details) */
 
 package com.github.jairrab.calc
@@ -5,7 +7,6 @@ package com.github.jairrab.calc
 import com.github.jairrab.calc.lib.CalculatorUtility
 import com.github.jairrab.calc.lib.controls.ControlProcessor
 import com.github.jairrab.calc.lib.controls.entries.EntriesManager
-
 
 interface Calculator {
     fun press(button: CalculatorButton)

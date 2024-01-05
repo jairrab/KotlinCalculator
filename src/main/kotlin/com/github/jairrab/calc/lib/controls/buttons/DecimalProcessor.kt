@@ -1,3 +1,5 @@
+@file:Suppress("UseCheckOrError")
+
 /* This code is licensed under MIT license (see LICENSE.txt for details) */
 
 package com.github.jairrab.calc.lib.controls.buttons
@@ -8,7 +10,6 @@ import com.github.jairrab.calc.InvalidKeyType.INVALID_DECIMAL_ENTRY
 import com.github.jairrab.calc.lib.controls.entries.EntriesManager
 import com.github.jairrab.calc.lib.controls.outputs.OutputManager
 import com.github.jairrab.calc.lib.utils.trimEndChar
-
 
 internal class DecimalProcessor(
     private val entriesManager: EntriesManager,

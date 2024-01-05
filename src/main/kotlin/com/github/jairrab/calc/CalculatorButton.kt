@@ -2,7 +2,7 @@
 
 package com.github.jairrab.calc
 
-enum class CalculatorButton(val tag:String){
+enum class CalculatorButton(val tag: String) {
     CLEAR("clear"),
     ONE("1"),
     TWO("2"),

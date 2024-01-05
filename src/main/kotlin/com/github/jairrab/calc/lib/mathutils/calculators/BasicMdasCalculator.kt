@@ -1,8 +1,20 @@
+@file:Suppress(
+    "CyclomaticComplexMethod",
+    "ThrowsCount",
+    "LoopWithTooManyJumpStatements",
+    "UseCheckOrError"
+)
+
 /* This code is licensed under MIT license (see LICENSE.txt for details) */
 
 package com.github.jairrab.calc.lib.mathutils.calculators
 
-import com.github.jairrab.calc.CalculatorButton.*
+import com.github.jairrab.calc.CalculatorButton.DECIMAL
+import com.github.jairrab.calc.CalculatorButton.DIVISION
+import com.github.jairrab.calc.CalculatorButton.MINUS
+import com.github.jairrab.calc.CalculatorButton.MULTIPLY
+import com.github.jairrab.calc.CalculatorButton.PERCENT
+import com.github.jairrab.calc.CalculatorButton.PLUS
 import com.github.jairrab.calc.lib.mathutils.DivideByZeroException
 import com.github.jairrab.calc.lib.mathutils.EntriesCalculator
 import com.github.jairrab.calc.lib.mathutils.OperatorUtils.isOperator
