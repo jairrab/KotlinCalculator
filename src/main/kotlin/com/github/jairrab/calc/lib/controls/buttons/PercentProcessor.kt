@@ -13,7 +13,7 @@ import com.github.jairrab.calc.lib.utils.trimEndChar
 
 internal class PercentProcessor(
     private val entriesManager: EntriesManager,
-    private val outputManager: OutputManager
+    private val outputManager: OutputManager,
 ) {
     internal fun processPercent() {
         val entries = entriesManager.getEntries()

@@ -8,7 +8,7 @@ import com.github.jairrab.calc.lib.controls.entries.EntriesManager
 import com.github.jairrab.calc.lib.utils.trimEndChar
 
 internal class BackspaceProcessor(
-    private val entriesManager: EntriesManager
+    private val entriesManager: EntriesManager,
 ) {
     fun onBackSpace() {
         if (entriesManager.hasEntries()) {

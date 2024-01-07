@@ -43,7 +43,7 @@ interface Calculator {
             calculatorType = CalculatorType.BASIC_MDAS,
             initialNumber = 0.0,
             readyToClear = true,
-            listener = null
+            listener = null,
         )
 
         @JvmStatic
@@ -51,7 +51,7 @@ interface Calculator {
             calculatorType = CalculatorType.BASIC_MDAS,
             initialNumber = 0.0,
             readyToClear = true,
-            listener = listener
+            listener = listener,
         )
 
         @JvmStatic
@@ -59,15 +59,15 @@ interface Calculator {
             calculatorType: CalculatorType = CalculatorType.BASIC_MDAS,
             initialNumber: Double = 0.0,
             readyToClear: Boolean = true,
-            listener: Listener? = null
+            listener: Listener? = null,
         ): Calculator = CalculatorUtility(
             initialNumber = initialNumber,
             readyToClear = readyToClear,
             controlProcessor = ControlProcessor.getInstance(
                 entriesManager = EntriesManager.getInstance(),
                 calculatorType = calculatorType,
-                listener = listener
-            )
+                listener = listener,
+            ),
         )
     }
 }

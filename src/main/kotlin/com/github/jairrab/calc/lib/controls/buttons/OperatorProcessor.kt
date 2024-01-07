@@ -14,7 +14,7 @@ import com.github.jairrab.calc.lib.utils.trimEndChar
 
 internal class OperatorProcessor(
     private val entriesManager: EntriesManager,
-    private val outputManager: OutputManager
+    private val outputManager: OutputManager,
 ) {
     internal fun processOperator(calculatorButton: CalculatorButton) {
         val operator = calculatorButton.tag

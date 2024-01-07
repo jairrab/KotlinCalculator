@@ -7,7 +7,7 @@ sealed class CalculatorUpdate {
         val key: String?,
         val entries: List<String>,
         val result: Double,
-        val resultText: String
+        val resultText: String,
     ) : CalculatorUpdate()
 
     sealed class Error : CalculatorUpdate() {

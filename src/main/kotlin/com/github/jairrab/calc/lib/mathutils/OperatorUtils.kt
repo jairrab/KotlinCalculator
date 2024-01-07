@@ -12,7 +12,7 @@ object OperatorUtils {
         CalculatorButton.MINUS,
         CalculatorButton.DIVISION,
         CalculatorButton.MULTIPLY,
-        CalculatorButton.EQUALS
+        CalculatorButton.EQUALS,
     )
 
     val operatorTags = operators.map { it.tag }

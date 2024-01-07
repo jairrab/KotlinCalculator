@@ -20,7 +20,7 @@ internal class ControlProcessor private constructor(
     val decimalProcessor: DecimalProcessor,
     val numberProcessor: NumberProcessor,
     val operatorProcessor: OperatorProcessor,
-    val percentProcessor: PercentProcessor
+    val percentProcessor: PercentProcessor,
 ) {
     fun setListener(listener: Calculator.Listener) {
         outputManager.listener = listener
@@ -30,7 +30,7 @@ internal class ControlProcessor private constructor(
         fun getInstance(
             entriesManager: EntriesManager,
             calculatorType: CalculatorType,
-            listener: Calculator.Listener?
+            listener: Calculator.Listener?,
         ): ControlProcessor {
             val displayManager = OutputManager
                 .getInstance(entriesManager, calculatorType, listener)
@@ -42,7 +42,7 @@ internal class ControlProcessor private constructor(
                 decimalProcessor = DecimalProcessor(entriesManager, displayManager),
                 numberProcessor = NumberProcessor(entriesManager),
                 operatorProcessor = OperatorProcessor(entriesManager, displayManager),
-                percentProcessor = PercentProcessor(entriesManager, displayManager)
+                percentProcessor = PercentProcessor(entriesManager, displayManager),
             )
         }
     }

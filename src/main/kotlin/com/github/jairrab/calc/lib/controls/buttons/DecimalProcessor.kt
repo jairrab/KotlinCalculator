@@ -13,7 +13,7 @@ import com.github.jairrab.calc.lib.utils.trimEndChar
 
 internal class DecimalProcessor(
     private val entriesManager: EntriesManager,
-    private val outputManager: OutputManager
+    private val outputManager: OutputManager,
 ) {
     fun processDecimal() {
         if (entriesManager.isNoEntries()) {

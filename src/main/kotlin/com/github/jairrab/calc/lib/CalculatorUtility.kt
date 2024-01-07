@@ -11,7 +11,7 @@ import com.github.jairrab.calc.lib.controls.ControlProcessor
 internal open class CalculatorUtility(
     initialNumber: Double,
     readyToClear: Boolean,
-    private val controlProcessor: ControlProcessor
+    private val controlProcessor: ControlProcessor,
 ) : Calculator {
     init {
         resetToNumber(initialNumber, readyToClear)

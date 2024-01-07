@@ -2,7 +2,7 @@
     "CyclomaticComplexMethod",
     "ThrowsCount",
     "LoopWithTooManyJumpStatements",
-    "UseCheckOrError"
+    "UseCheckOrError",
 )
 
 /* This code is licensed under MIT license (see LICENSE.txt for details) */

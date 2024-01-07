@@ -18,7 +18,7 @@ import java.math.BigDecimal
 internal class OutputManager private constructor(
     var listener: Calculator.Listener?,
     private val entriesManager: EntriesManager,
-    private val equationSolver: EquationSolver
+    private val equationSolver: EquationSolver,
 ) {
     fun update(button: CalculatorButton) {
         val entries = entriesManager.getEntries()
@@ -31,7 +31,7 @@ internal class OutputManager private constructor(
                         entriesManager.getLastDoubleEntry()
                     entriesManager.isLastEntryANumber() -> entriesManager.getLastDoubleEntry()
                     else -> throw IllegalStateException(
-                        "Invalid entry: ${entriesManager.getLastEntry()}"
+                        "Invalid entry: ${entriesManager.getLastEntry()}",
                     )
                 }
                 else -> equationSolver.solve(entries)
@@ -51,7 +51,7 @@ internal class OutputManager private constructor(
 
             LOG.info(
                 "Calculator: Key: ${button.tag} | Entries: $entries | Result: $result " +
-                    "| ResultText: $resultText"
+                    "| ResultText: $resultText",
             )
 
             updateListener(
@@ -59,8 +59,8 @@ internal class OutputManager private constructor(
                     key = button.tag,
                     entries = entries,
                     result = result,
-                    resultText = resultText
-                )
+                    resultText = resultText,
+                ),
             )
         } catch (e: DivideByZeroException) {
             LOG.warning("Calculator: Divide by zero error")
@@ -89,7 +89,7 @@ internal class OutputManager private constructor(
         fun getInstance(
             entriesManager: EntriesManager,
             calculatorType: CalculatorType,
-            listener: Calculator.Listener?
+            listener: Calculator.Listener?,
         ): OutputManager {
             val equationSolver = EquationSolver.getInstance(calculatorType)
             return OutputManager(listener, entriesManager, equationSolver)

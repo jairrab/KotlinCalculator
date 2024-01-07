@@ -6,7 +6,7 @@ import com.github.jairrab.calc.lib.controls.entries.EntriesManager
 import java.math.BigDecimal
 
 internal class ClearProcessor(
-    private val entriesManager: EntriesManager
+    private val entriesManager: EntriesManager,
 ) {
     fun initialize(initialNumber: Double, readyToClear: Boolean) {
         entriesManager.clearEntries()

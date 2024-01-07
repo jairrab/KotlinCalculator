@@ -14,7 +14,7 @@ import com.github.jairrab.calc.CalculatorType
 fun main() {
     val calculator = Calculator.getInstance(
         calculatorType = CalculatorType.BASIC_MDAS,
-        initialNumber = 0.0
+        initialNumber = 0.0,
     ) {
         // See runtime logs for output
     }
