@@ -19,9 +19,11 @@ import com.github.jairrab.calc.lib.mathutils.DivideByZeroException
 import com.github.jairrab.calc.lib.mathutils.EntriesCalculator
 import com.github.jairrab.calc.lib.mathutils.OperatorUtils.isOperator
 import com.github.jairrab.calc.lib.utils.trimEndChar
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 class BasicNonMdasCalculator : EntriesCalculator {
-    override fun solve(entries: List<String>): Double {
+    override fun solve(entries: List<String>): BigDecimal {
         val entriesToProcess = entries.toMutableList().apply {
             if (isOperator(last())) removeLast()
         }
@@ -29,8 +31,8 @@ class BasicNonMdasCalculator : EntriesCalculator {
         return calculate(entriesToProcess)
     }
 
-    private fun calculate(entries: List<String>): Double {
-        var a = 0.0
+    private fun calculate(entries: List<String>): BigDecimal {
+        var a = BigDecimal.ZERO
 
         if (entries.size == 1) {
             return getEntryWithPercentFactor(entries[0])
@@ -49,43 +51,83 @@ class BasicNonMdasCalculator : EntriesCalculator {
             }
 
             if (i == entries.lastIndex) {
-                when (entries[i - 1]) {
-                    PLUS.tag -> a += getEntryWithPercentFactor(entries[i], a)
-                    MINUS.tag -> a -= getEntryWithPercentFactor(entries[i], a)
-                    MULTIPLY.tag -> a *= getEntryWithPercentFactor(entries[i])
-                    DIVISION.tag -> a /= getDivisor(entries, i)
+                a = when (entries[i - 1]) {
+                    PLUS.tag -> {
+                        a.add(getEntryWithPercentFactor(entries[i], a))
+                    }
+                    MINUS.tag -> {
+                        a.minus(getEntryWithPercentFactor(entries[i], a))
+                    }
+                    MULTIPLY.tag -> {
+                        a.multiply(getEntryWithPercentFactor(entries[i]))
+                    }
+                    DIVISION.tag -> {
+                        a.divide(getDivisor(entries, i), 10, RoundingMode.HALF_UP)
+                    }
                     else -> throw IllegalStateException("Error solving last entry")
                 }
                 return a
             }
 
             when (entries[i + 1]) {
-                PLUS.tag -> when (entries[i - 1]) {
-                    PLUS.tag -> a += getEntryWithPercentFactor(entries[i], a)
-                    MINUS.tag -> a -= getEntryWithPercentFactor(entries[i], a)
-                    MULTIPLY.tag -> a *= getEntryWithPercentFactor(entries[i])
-                    DIVISION.tag -> a /= getDivisor(entries, i)
+                PLUS.tag -> a = when (entries[i - 1]) {
+                    PLUS.tag -> {
+                        a.add(getEntryWithPercentFactor(entries[i], a))
+                    }
+                    MINUS.tag -> {
+                        a.minus(getEntryWithPercentFactor(entries[i], a))
+                    }
+                    MULTIPLY.tag -> {
+                        a.multiply(getEntryWithPercentFactor(entries[i]))
+                    }
+                    DIVISION.tag -> {
+                        a.divide(getDivisor(entries, i), 10, RoundingMode.HALF_UP)
+                    }
                     else -> throw IllegalStateException("Error checking plus tag")
                 }
-                MINUS.tag -> when (entries[i - 1]) {
-                    PLUS.tag -> a += getEntryWithPercentFactor(entries[i], a)
-                    MINUS.tag -> a -= getEntryWithPercentFactor(entries[i], a)
-                    MULTIPLY.tag -> a *= getEntryWithPercentFactor(entries[i])
-                    DIVISION.tag -> a /= getDivisor(entries, i)
+                MINUS.tag -> a = when (entries[i - 1]) {
+                    PLUS.tag -> {
+                        a.add(getEntryWithPercentFactor(entries[i], a))
+                    }
+                    MINUS.tag -> {
+                        a.minus(getEntryWithPercentFactor(entries[i], a))
+                    }
+                    MULTIPLY.tag -> {
+                        a.multiply(getEntryWithPercentFactor(entries[i]))
+                    }
+                    DIVISION.tag -> {
+                        a.divide(getDivisor(entries, i), 10, RoundingMode.HALF_UP)
+                    }
                     else -> throw IllegalStateException("Error checking minus tag")
                 }
-                MULTIPLY.tag -> when (entries[i - 1]) {
-                    PLUS.tag -> a += getEntryWithPercentFactor(entries[i])
-                    MINUS.tag -> a -= getEntryWithPercentFactor(entries[i])
-                    MULTIPLY.tag -> a *= getEntryWithPercentFactor(entries[i])
-                    DIVISION.tag -> a /= getDivisor(entries, i)
+                MULTIPLY.tag -> a = when (entries[i - 1]) {
+                    PLUS.tag -> {
+                        a.add(getEntryWithPercentFactor(entries[i]))
+                    }
+                    MINUS.tag -> {
+                        a.minus(getEntryWithPercentFactor(entries[i]))
+                    }
+                    MULTIPLY.tag -> {
+                        a.multiply(getEntryWithPercentFactor(entries[i]))
+                    }
+                    DIVISION.tag -> {
+                        a.divide(getDivisor(entries, i), 10, RoundingMode.HALF_UP)
+                    }
                     else -> throw IllegalStateException("Error checking multiply tag")
                 }
-                DIVISION.tag -> when (entries[i - 1]) {
-                    PLUS.tag -> a += getEntryWithPercentFactor(entries[i])
-                    MINUS.tag -> a -= getEntryWithPercentFactor(entries[i])
-                    MULTIPLY.tag -> a *= getEntryWithPercentFactor(entries[i])
-                    DIVISION.tag -> a /= getDivisor(entries, i)
+                DIVISION.tag -> a = when (entries[i - 1]) {
+                    PLUS.tag -> {
+                        a.add(getEntryWithPercentFactor(entries[i]))
+                    }
+                    MINUS.tag -> {
+                        a.minus(getEntryWithPercentFactor(entries[i]))
+                    }
+                    MULTIPLY.tag -> {
+                        a.multiply(getEntryWithPercentFactor(entries[i]))
+                    }
+                    DIVISION.tag -> {
+                        a.divide(getDivisor(entries, i), 10, RoundingMode.HALF_UP)
+                    }
                     else -> throw IllegalStateException("Error checking division tag")
                 }
                 else -> throw IllegalStateException("Error checking next operator tag")
@@ -94,25 +136,25 @@ class BasicNonMdasCalculator : EntriesCalculator {
         throw IllegalStateException("Error solving equation")
     }
 
-    private fun getDivisor(entries: List<String>, i: Int): Double {
+    private fun getDivisor(entries: List<String>, i: Int): BigDecimal {
         val divisor = getEntryWithPercentFactor(entries[i])
-        if (divisor == 0.0) throw DivideByZeroException()
+        if (divisor == BigDecimal.ZERO) throw DivideByZeroException()
         return divisor
     }
 
-    private fun getEntryWithPercentFactor(entry: String, baseNumber: Double): Double {
+    private fun getEntryWithPercentFactor(entry: String, baseNumber: BigDecimal): BigDecimal {
         return if (entry.endsWith(PERCENT.tag)) {
-            baseNumber * entry.trimEndChar().toDouble() / 100.0
+            baseNumber * BigDecimal(entry.trimEndChar()) / BigDecimal(100.0)
         } else {
-            entry.toDouble()
+            BigDecimal(entry)
         }
     }
 
-    private fun getEntryWithPercentFactor(entry: String): Double {
+    private fun getEntryWithPercentFactor(entry: String): BigDecimal {
         return if (entry.endsWith(PERCENT.tag)) {
-            entry.trimEndChar().toDouble() / 100.0
+            BigDecimal(entry.trimEndChar()) / BigDecimal(100.0)
         } else {
-            entry.toDouble()
+            BigDecimal(entry)
         }
     }
 }

@@ -7,11 +7,12 @@ package com.github.jairrab.calc
 import com.github.jairrab.calc.lib.CalculatorUtility
 import com.github.jairrab.calc.lib.controls.ControlProcessor
 import com.github.jairrab.calc.lib.controls.entries.EntriesManager
+import java.math.BigDecimal
 
 interface Calculator {
     fun press(button: CalculatorButton)
     fun clear()
-    fun resetToNumber(number: Double, readyToClear: Boolean = true)
+    fun resetToNumber(number: BigDecimal, readyToClear: Boolean = true)
     fun pressOne()
     fun pressTwo()
     fun pressThree()
@@ -31,7 +32,7 @@ interface Calculator {
     fun backSpace()
     fun pressEquals()
     fun setListener(listener: Listener)
-    fun getCurrentNumber(): Double
+    fun getCurrentNumber(): BigDecimal
 
     fun interface Listener {
         fun onCalculatorUpdate(update: CalculatorUpdate)

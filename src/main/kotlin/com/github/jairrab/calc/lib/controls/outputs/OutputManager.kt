@@ -23,10 +23,10 @@ internal class OutputManager private constructor(
     fun update(button: CalculatorButton) {
         val entries = entriesManager.getEntries()
         try {
-            val result = when {
-                entriesManager.isNoEntries() -> 0.0
+            val result: BigDecimal = when {
+                entriesManager.isNoEntries() -> BigDecimal.ZERO
                 entriesManager.isSingleEntry() -> when {
-                    entriesManager.isLastEntryADecimal() -> 0.0
+                    entriesManager.isLastEntryADecimal() -> BigDecimal.ZERO
                     entriesManager.isLastEntryAPercentNumber() ->
                         entriesManager.getLastDoubleEntry()
                     entriesManager.isLastEntryANumber() -> entriesManager.getLastDoubleEntry()
@@ -46,7 +46,7 @@ internal class OutputManager private constructor(
             val resultText = if (entries.size in 1..2) {
                 entries.first()
             } else {
-                BigDecimal(result).stripTrailingZeros().toPlainString()
+                result.stripTrailingZeros().toPlainString()
             }
 
             LOG.info(
@@ -72,7 +72,7 @@ internal class OutputManager private constructor(
         }
     }
 
-    fun update(number: Double) {
+    fun update(number: BigDecimal) {
         updateListener(CalculatorUpdate.Initializing(number, entriesManager.getEntries()))
         LOG.info("Calculator: Initializing calculator")
     }
@@ -81,7 +81,7 @@ internal class OutputManager private constructor(
         listener?.onCalculatorUpdate(calculatorUpdate)
     }
 
-    fun getCurrentNumber(): Double {
+    fun getCurrentNumber(): BigDecimal {
         return entriesManager.getResult()
     }
 

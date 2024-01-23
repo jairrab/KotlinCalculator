@@ -8,10 +8,11 @@ import com.github.jairrab.calc.CalculatorButton
 import com.github.jairrab.calc.CalculatorButton.DECIMAL
 import com.github.jairrab.calc.lib.mathutils.OperatorUtils.operatorTags
 import com.github.jairrab.calc.lib.utils.trimEndChar
+import java.math.BigDecimal
 
 internal class EntriesManager private constructor() {
     private val entries: MutableList<String> = ArrayList()
-    private var result: Double? = null
+    private var result: BigDecimal? = null
     private var readyToClear = false
 
     fun getEntries(): List<String> {
@@ -30,11 +31,11 @@ internal class EntriesManager private constructor() {
         this.readyToClear = readyToClear
     }
 
-    fun getResult(): Double {
-        return result ?: 0.0
+    fun getResult(): BigDecimal {
+        return result ?: BigDecimal.ZERO
     }
 
-    fun setResult(result: Double) {
+    fun setResult(result: BigDecimal) {
         this.result = result
     }
 
@@ -70,13 +71,13 @@ internal class EntriesManager private constructor() {
         return entries.last()
     }
 
-    fun getLastDoubleEntry(): Double {
+    fun getLastDoubleEntry(): BigDecimal {
         val lastEntry = getLastEntry()
         return if (lastEntry.endsWith(CalculatorButton.PERCENT.tag)) {
             lastEntry.trimEndChar().toDouble() / 100.0
         } else {
             lastEntry.toDouble()
-        }
+        }.let { BigDecimal(it) }
     }
 
     fun isLastEntryADecimal(): Boolean {

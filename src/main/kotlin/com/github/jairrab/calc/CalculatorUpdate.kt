@@ -1,12 +1,14 @@
 package com.github.jairrab.calc
 
+import java.math.BigDecimal
+
 sealed class CalculatorUpdate {
-    class Initializing(val number: Double, val entries: List<String>) : CalculatorUpdate()
+    class Initializing(val number: BigDecimal, val entries: List<String>) : CalculatorUpdate()
 
     class OnUpdate(
         val key: String?,
         val entries: List<String>,
-        val result: Double,
+        val result: BigDecimal,
         val resultText: String,
     ) : CalculatorUpdate()
 

@@ -5,11 +5,12 @@ package com.github.jairrab.calc.lib.mathutils
 import com.github.jairrab.calc.CalculatorType
 import com.github.jairrab.calc.lib.mathutils.calculators.BasicMdasCalculator
 import com.github.jairrab.calc.lib.mathutils.calculators.BasicNonMdasCalculator
+import java.math.BigDecimal
 
 class EquationSolver private constructor(
     private val entriesCalculator: EntriesCalculator,
 ) {
-    fun solve(entries: List<String>): Double {
+    fun solve(entries: List<String>): BigDecimal {
         return entriesCalculator.solve(entries)
     }
 

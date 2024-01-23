@@ -7,6 +7,7 @@ package com.github.jairrab.calc.lib
 import com.github.jairrab.calc.Calculator
 import com.github.jairrab.calc.CalculatorButton
 import com.github.jairrab.calc.lib.controls.ControlProcessor
+import java.math.BigDecimal
 
 internal open class CalculatorUtility(
     initialNumber: Double,
@@ -14,7 +15,7 @@ internal open class CalculatorUtility(
     private val controlProcessor: ControlProcessor,
 ) : Calculator {
     init {
-        resetToNumber(initialNumber, readyToClear)
+        resetToNumber(BigDecimal(initialNumber), readyToClear)
     }
 
     override fun press(button: CalculatorButton) {
@@ -46,7 +47,7 @@ internal open class CalculatorUtility(
         controlProcessor.outputManager.update(CalculatorButton.CLEAR)
     }
 
-    final override fun resetToNumber(number: Double, readyToClear: Boolean) {
+    final override fun resetToNumber(number: BigDecimal, readyToClear: Boolean) {
         controlProcessor.clearProcessor.initialize(number, readyToClear)
         controlProcessor.outputManager.update(number)
     }
@@ -145,7 +146,7 @@ internal open class CalculatorUtility(
         controlProcessor.setListener(listener)
     }
 
-    override fun getCurrentNumber(): Double {
+    override fun getCurrentNumber(): BigDecimal {
         return controlProcessor.outputManager.getCurrentNumber()
     }
 }
