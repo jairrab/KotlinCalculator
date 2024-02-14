@@ -137,7 +137,7 @@ class BasicMdasCalculator : EntriesCalculator {
 
     private fun getDivisor(entries: List<String>, i: Int): BigDecimal {
         val divisor = getEntryWithPercentFactor(entries[i])
-        if (divisor == BigDecimal.ZERO) throw DivideByZeroException()
+        if (divisor.compareTo(BigDecimal.ZERO) == 0) throw DivideByZeroException()
         return divisor
     }
 
