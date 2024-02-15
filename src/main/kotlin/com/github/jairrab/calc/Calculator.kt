@@ -12,7 +12,7 @@ import java.math.BigDecimal
 interface Calculator {
     fun press(button: CalculatorButton)
     fun clear()
-    fun resetToNumber(number: BigDecimal, readyToClear: Boolean = true)
+    fun resetToNumber(number: Double, readyToClear: Boolean = true)
     fun pressOne()
     fun pressTwo()
     fun pressThree()

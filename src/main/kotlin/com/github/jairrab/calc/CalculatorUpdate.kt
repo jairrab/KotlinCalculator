@@ -3,7 +3,7 @@ package com.github.jairrab.calc
 import java.math.BigDecimal
 
 sealed class CalculatorUpdate {
-    class Initializing(val number: BigDecimal, val entries: List<String>) : CalculatorUpdate()
+    class Initializing(val number: Double, val entries: List<String>) : CalculatorUpdate()
 
     class OnUpdate(
         val key: String?,

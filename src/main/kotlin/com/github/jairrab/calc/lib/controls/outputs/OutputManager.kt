@@ -72,7 +72,7 @@ internal class OutputManager private constructor(
         }
     }
 
-    fun update(number: BigDecimal) {
+    fun update(number: Double) {
         updateListener(CalculatorUpdate.Initializing(number, entriesManager.getEntries()))
         LOG.info("Calculator: Initializing calculator")
     }

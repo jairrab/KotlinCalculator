@@ -15,7 +15,7 @@ internal open class CalculatorUtility(
     private val controlProcessor: ControlProcessor,
 ) : Calculator {
     init {
-        resetToNumber(BigDecimal(initialNumber), readyToClear)
+        resetToNumber(initialNumber, readyToClear)
     }
 
     override fun press(button: CalculatorButton) {
@@ -47,7 +47,7 @@ internal open class CalculatorUtility(
         controlProcessor.outputManager.update(CalculatorButton.CLEAR)
     }
 
-    final override fun resetToNumber(number: BigDecimal, readyToClear: Boolean) {
+    final override fun resetToNumber(number: Double, readyToClear: Boolean) {
         controlProcessor.clearProcessor.initialize(number, readyToClear)
         controlProcessor.outputManager.update(number)
     }
