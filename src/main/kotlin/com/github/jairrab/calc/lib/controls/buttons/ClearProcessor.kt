@@ -12,7 +12,7 @@ internal class ClearProcessor(
         entriesManager.clearEntries()
         entriesManager.setReadyToClear(readyToClear)
 
-        if (initialNumber != 0.0) {
+        if (initialNumber != 0.0 && !initialNumber.isInfinite() && !initialNumber.isNaN()) {
             val entry = if (initialNumber % 1 == 0.0) {
                 BigDecimal(initialNumber).setScale(0).toString()
             } else {
