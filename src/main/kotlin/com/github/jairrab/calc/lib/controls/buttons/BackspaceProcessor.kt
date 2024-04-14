@@ -34,6 +34,10 @@ internal class BackspaceProcessor(
                         entriesManager.removeLastEntry()
                     }
                 }
+                entriesManager.isLastEntryEndsWithExponent() -> {
+                    val entry = entriesManager.getLastEntry().trimEndChar()
+                    entriesManager.setLastEntry(entry)
+                }
                 entriesManager.isLastEntryAnOperator() -> entriesManager.removeLastEntry()
                 entriesManager.isLastEntryADecimal() -> entriesManager.removeLastEntry()
                 else -> throw IllegalStateException("Invalid backspace command")

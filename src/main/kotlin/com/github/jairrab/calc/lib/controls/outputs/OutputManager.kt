@@ -30,6 +30,7 @@ internal class OutputManager private constructor(
                     entriesManager.isLastEntryAPercentNumber() ->
                         entriesManager.getLastDoubleEntry()
                     entriesManager.isLastEntryANumber() -> entriesManager.getLastDoubleEntry()
+                    entriesManager.isLastEntryEndsWithExponent() -> entriesManager.getLastDoubleEntry()
                     else -> throw IllegalStateException(
                         "Invalid entry: ${entriesManager.getLastEntry()}",
                     )
@@ -72,9 +73,10 @@ internal class OutputManager private constructor(
         }
     }
 
-    fun update(number: Double) {
-        updateListener(CalculatorUpdate.Initializing(number, entriesManager.getEntries()))
-        LOG.info("Calculator: Initializing calculator")
+    fun initialize(number: Double) {
+        val entries = entriesManager.getEntries()
+        updateListener(CalculatorUpdate.Initializing(number, entries))
+        LOG.info("Calculator: Initializing calculator $number | Entries: $entries")
     }
 
     fun updateListener(calculatorUpdate: CalculatorUpdate) {

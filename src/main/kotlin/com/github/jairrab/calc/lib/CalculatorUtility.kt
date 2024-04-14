@@ -49,7 +49,7 @@ internal open class CalculatorUtility(
 
     final override fun resetToNumber(number: Double, readyToClear: Boolean) {
         controlProcessor.clearProcessor.initialize(number, readyToClear)
-        controlProcessor.outputManager.update(number)
+        controlProcessor.outputManager.initialize(number)
     }
 
     override fun pressOne() {

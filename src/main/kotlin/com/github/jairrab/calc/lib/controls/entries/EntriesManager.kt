@@ -73,11 +73,14 @@ internal class EntriesManager private constructor() {
 
     fun getLastDoubleEntry(): BigDecimal {
         val lastEntry = getLastEntry()
-        return if (lastEntry.endsWith(CalculatorButton.PERCENT.tag)) {
+        val value = if (lastEntry.endsWith(CalculatorButton.PERCENT.tag)) {
+            lastEntry.trimEndChar().toDouble() / 100.0
+        } else if (lastEntry.endsWith("E", ignoreCase = true)) {
             lastEntry.trimEndChar().toDouble() / 100.0
         } else {
             lastEntry.toDouble()
-        }.let { BigDecimal(it) }
+        }
+        return BigDecimal(value)
     }
 
     fun isLastEntryADecimal(): Boolean {
@@ -90,6 +93,10 @@ internal class EntriesManager private constructor() {
 
     fun isLastEntryAPercentNumber(): Boolean {
         return (getLastEntry().endsWith(CalculatorButton.PERCENT.tag))
+    }
+
+    fun isLastEntryEndsWithExponent(): Boolean {
+        return (getLastEntry().endsWith("E", ignoreCase = true))
     }
 
     fun isLastEntryANumber(): Boolean {
