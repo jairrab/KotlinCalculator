@@ -96,7 +96,8 @@ internal class EntriesManager private constructor() {
     }
 
     fun isLastEntryEndsWithExponent(): Boolean {
-        return (getLastEntry().endsWith("E", ignoreCase = true))
+        return (getLastEntry().endsWith("E", ignoreCase = true)) ||
+            (getLastEntry().endsWith("E-", ignoreCase = true))
     }
 
     fun isLastEntryANumber(): Boolean {

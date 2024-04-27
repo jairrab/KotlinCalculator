@@ -30,7 +30,8 @@ internal class OutputManager private constructor(
                     entriesManager.isLastEntryAPercentNumber() ->
                         entriesManager.getLastDoubleEntry()
                     entriesManager.isLastEntryANumber() -> entriesManager.getLastDoubleEntry()
-                    entriesManager.isLastEntryEndsWithExponent() -> entriesManager.getLastDoubleEntry()
+                    entriesManager.isLastEntryEndsWithExponent() ->
+                        entriesManager.getLastDoubleEntry()
                     else -> throw IllegalStateException(
                         "Invalid entry: ${entriesManager.getLastEntry()}",
                     )
