@@ -144,7 +144,7 @@ class BasicNonMdasCalculator : EntriesCalculator {
 
     private fun getEntryWithPercentFactor(entry: String, baseNumber: BigDecimal): BigDecimal {
         return if (entry.endsWith(PERCENT.tag)) {
-            baseNumber * BigDecimal(entry.trimEndChar()) / BigDecimal(100.0)
+            baseNumber * BigDecimal(entry.trimEndChar()).divide(BigDecimal(100.0))
         } else {
             BigDecimal(entry)
         }
@@ -152,7 +152,7 @@ class BasicNonMdasCalculator : EntriesCalculator {
 
     private fun getEntryWithPercentFactor(entry: String): BigDecimal {
         return if (entry.endsWith(PERCENT.tag)) {
-            BigDecimal(entry.trimEndChar()) / BigDecimal(100.0)
+            BigDecimal(entry.trimEndChar()).divide(BigDecimal(100.0))
         } else {
             BigDecimal(entry)
         }
