@@ -76,7 +76,9 @@ internal class EntriesManager private constructor() {
         val value = if (lastEntry.endsWith(CalculatorButton.PERCENT.tag)) {
             lastEntry.trimEndChar().toDouble() / 100.0
         } else if (lastEntry.endsWith("E", ignoreCase = true)) {
-            lastEntry.trimEndChar().toDouble() / 100.0
+            lastEntry.trimEndChar().toDoubleOrNull() ?: 0.0
+        } else if (lastEntry.endsWith("E-", ignoreCase = true)) {
+            lastEntry.trimEndChar(2).toDoubleOrNull() ?: 0.0
         } else {
             lastEntry.toDouble()
         }

@@ -2,6 +2,6 @@
 
 package com.github.jairrab.calc.lib.utils
 
-fun String.trimEndChar(): String {
-    return this.substring(0, this.length - 1)
+fun String.trimEndChar(numChars: Int = 1): String {
+    return this.substring(0, (this.length - numChars).coerceAtLeast(0))
 }
