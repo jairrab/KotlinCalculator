@@ -1,5 +1,7 @@
+import config.unitTesting
+
 plugins {
-    id("plugins.library")
+    id("base-library")
 }
 
 private val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
