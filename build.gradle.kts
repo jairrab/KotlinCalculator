@@ -1,7 +1,7 @@
 import config.unitTesting
 
 plugins {
-    id("base-library")
+    id("com.bluecoins.plugins.base-library")
     kotlin("plugin.serialization")
 }
 
