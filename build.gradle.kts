@@ -1,4 +1,4 @@
-import config.unitTesting
+import plugins.unitTesting
 
 plugins {
     id("com.bluecoins.plugins.base-library")
