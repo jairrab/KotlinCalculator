@@ -1,6 +1,6 @@
 @file:Suppress("UseCheckOrError", "SwallowedException")
 
-/* This code is licensed under MIT license (see LICENSE.txt for details) */
+// This code is licensed under MIT license (see LICENSE.txt for details)
 
 package com.github.jairrab.calc.lib.controls.outputs
 

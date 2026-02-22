@@ -1,6 +1,6 @@
 @file:Suppress("TooManyFunctions")
 
-/* This code is licensed under MIT license (see LICENSE.txt for details) */
+// This code is licensed under MIT license (see LICENSE.txt for details)
 
 package com.github.jairrab.calc
 
@@ -11,27 +11,49 @@ import java.math.BigDecimal
 
 interface Calculator {
     fun press(button: CalculatorButton)
+
     fun clear()
+
     fun resetToNumber(number: Double, readyToClear: Boolean = true)
+
     fun pressOne()
+
     fun pressTwo()
+
     fun pressThree()
+
     fun pressFour()
+
     fun pressFive()
+
     fun pressSix()
+
     fun pressSeven()
+
     fun pressEight()
+
     fun pressNine()
+
     fun pressZero()
+
     fun pressDecimal()
+
     fun pressPlus()
+
     fun pressMinus()
+
     fun pressMultiply()
+
     fun pressDivide()
+
     fun pressPercent()
+
     fun backSpace()
+
     fun pressEquals()
+
     fun setListener(listener: Listener)
+
     fun getCurrentNumber(): BigDecimal
 
     fun interface Listener {
