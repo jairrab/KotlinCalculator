@@ -40,7 +40,7 @@ internal class BackspaceProcessor(
                 }
                 entriesManager.isLastEntryAnOperator() -> entriesManager.removeLastEntry()
                 entriesManager.isLastEntryADecimal() -> entriesManager.removeLastEntry()
-                else -> throw IllegalStateException("Invalid backspace command")
+                else -> return
             }
         }
     }

@@ -80,7 +80,7 @@ internal class EntriesManager private constructor() {
         } else if (lastEntry.endsWith("E-", ignoreCase = true)) {
             lastEntry.trimEndChar(2).toDoubleOrNull() ?: 0.0
         } else {
-            lastEntry.toDouble()
+            lastEntry.toDoubleOrNull() ?: 0.0
         }
         return BigDecimal(value)
     }

@@ -41,7 +41,7 @@ internal class NumberProcessor(
             entriesManager.isLastEntryADecimal() -> {
                 entriesManager.appendToLastEntry(number)
             }
-            else -> throw IllegalStateException("Invalid number command")
+            else -> return
         }
     }
 }

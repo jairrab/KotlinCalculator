@@ -28,7 +28,7 @@ internal class OperatorProcessor(
             entriesManager.isReadyToClear() -> {
                 entriesManager.setReadyToClear(false)
                 entriesManager.clearEntries()
-                entriesManager.addEntry(entriesManager.getResult().toDouble().toString())
+                entriesManager.addEntry(entriesManager.getResult().stripTrailingZeros().toPlainString())
                 entriesManager.addEntry(operator)
             }
             entriesManager.isLastEntryAnOperator() -> {
@@ -60,7 +60,6 @@ internal class OperatorProcessor(
             else -> {
                 val entries = entriesManager.getEntries()
                 outputManager.updateListener(InvalidKey(INVALID_OPERATOR_ENTRY, entries))
-                throw IllegalStateException("Invalid operator entry")
             }
         }
     }

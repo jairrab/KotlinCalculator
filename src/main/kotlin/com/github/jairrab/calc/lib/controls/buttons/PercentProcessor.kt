@@ -40,13 +40,16 @@ internal class PercentProcessor(
                     }
                     entriesManager.appendToLastEntry(CalculatorButton.PERCENT.tag)
                 }
+                entriesManager.isLastEntryEndsWithExponent() -> {
+                    outputManager.updateListener(InvalidKey(INVALID_PERCENT_ENTRY, entries))
+                    return
+                }
                 entriesManager.isLastEntryADecimal() -> {
                     outputManager.updateListener(InvalidKey(INVALID_PERCENT_ENTRY, entries))
                     return
                 }
                 else -> {
                     outputManager.updateListener(InvalidKey(INVALID_PERCENT_ENTRY, entries))
-                    throw IllegalStateException("Invalid operator entry")
                 }
             }
         }

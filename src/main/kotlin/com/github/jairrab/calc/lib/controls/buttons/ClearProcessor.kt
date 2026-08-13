@@ -13,14 +13,15 @@ internal class ClearProcessor(
         entriesManager.setReadyToClear(readyToClear)
 
         if (initialNumber != 0.0 && !initialNumber.isInfinite() && !initialNumber.isNaN()) {
-            val entry = if (initialNumber % 1 == 0.0) {
-                BigDecimal(initialNumber).setScale(0).toString()
-            } else {
-                initialNumber.toString()
-            }
+            // Always seed a plain decimal string, never scientific notation (e.g. Double.toString
+            // renders 0.0004 as "4.0E-4"). BigDecimal.valueOf uses Double.toString's shortest
+            // round-trip and stripTrailingZeros drops the resulting "0.00040" trailing zero, so
+            // 0.0004 seeds as "0.0004" and backspace can't produce an incomplete exponent entry.
+            // (BigDecimal(0.0004) would seed the exact binary expansion instead.)
+            val entry = BigDecimal.valueOf(initialNumber).stripTrailingZeros().toPlainString()
 
             entriesManager.addEntry(entry)
-            entriesManager.setResult(BigDecimal(initialNumber))
+            entriesManager.setResult(BigDecimal.valueOf(initialNumber))
         }
     }
 

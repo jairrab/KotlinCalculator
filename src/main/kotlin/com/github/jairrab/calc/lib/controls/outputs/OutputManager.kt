@@ -32,9 +32,7 @@ internal class OutputManager private constructor(
                     entriesManager.isLastEntryANumber() -> entriesManager.getLastDoubleEntry()
                     entriesManager.isLastEntryEndsWithExponent() ->
                         entriesManager.getLastDoubleEntry()
-                    else -> throw IllegalStateException(
-                        "Invalid entry: ${entriesManager.getLastEntry()}",
-                    )
+                    else -> entriesManager.getLastDoubleEntry()
                 }
                 else -> equationSolver.solve(entries)
             }

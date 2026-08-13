@@ -18,6 +18,7 @@ import com.github.jairrab.calc.CalculatorButton.PLUS
 import com.github.jairrab.calc.lib.mathutils.DivideByZeroException
 import com.github.jairrab.calc.lib.mathutils.EntriesCalculator
 import com.github.jairrab.calc.lib.mathutils.OperatorUtils.isOperator
+import com.github.jairrab.calc.lib.utils.toCalculatorBigDecimal
 import com.github.jairrab.calc.lib.utils.trimEndChar
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -146,7 +147,7 @@ class BasicMdasCalculator : EntriesCalculator {
             entry == DECIMAL.tag -> BigDecimal.ZERO
             entry.endsWith(PERCENT.tag) ->
                 (baseNumber * BigDecimal(entry.trimEndChar())).divide(BigDecimal(100.0))
-            else -> BigDecimal(entry)
+            else -> entry.toCalculatorBigDecimal()
         }
     }
 
@@ -154,7 +155,7 @@ class BasicMdasCalculator : EntriesCalculator {
         return when {
             entry == DECIMAL.tag -> BigDecimal.ONE
             entry.endsWith(PERCENT.tag) -> BigDecimal(entry.trimEndChar()).divide(BigDecimal(100.0))
-            else -> BigDecimal(entry)
+            else -> entry.toCalculatorBigDecimal()
         }
     }
 }

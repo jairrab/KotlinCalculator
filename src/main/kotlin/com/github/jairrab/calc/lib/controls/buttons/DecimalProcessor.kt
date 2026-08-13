@@ -41,7 +41,11 @@ internal class DecimalProcessor(
                     entriesManager.appendToLastEntry(DECIMAL.tag)
                 }
                 entriesManager.isLastEntryADecimal() -> return
-                else -> throw IllegalStateException("Invalid decimal command")
+                else -> {
+                    val entries = entriesManager.getEntries()
+                    outputManager.updateListener(InvalidKey(INVALID_DECIMAL_ENTRY, entries))
+                    return
+                }
             }
         }
     }
